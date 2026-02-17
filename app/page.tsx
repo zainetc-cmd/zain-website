@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Mail, Linkedin, Shield, Zap, Download, Target, TrendingUp, Globe, MessageCircle } from "lucide-react";
+import { Mail, Linkedin, Shield, Zap, Download, Target, TrendingUp, Globe, MessageCircle, Briefcase, BarChart3 } from "lucide-react";
 
 export default function ZainPersonalBrand() {
   const services = [
@@ -61,8 +61,9 @@ export default function ZainPersonalBrand() {
           <span className="font-semibold tracking-wide">Zain ul Aabedeen</span>
           <div className="flex gap-6 text-sm text-gray-300">
             <a href="#services" className="hover:text-emerald-400">Services</a>
+            <a href="#who" className="hover:text-emerald-400">Who I Work With</a>
+            <a href="#proof" className="hover:text-emerald-400">Impact</a>
             <a href="#insights" className="hover:text-emerald-400">Insights</a>
-            <a href="#value" className="hover:text-emerald-400">Value</a>
             <a href="#contact" className="hover:text-emerald-400">Contact</a>
           </div>
         </div>
@@ -87,11 +88,11 @@ export default function ZainPersonalBrand() {
             <p className="mt-4 text-sm uppercase tracking-widest text-emerald-400">
               Serving Africa & Asia Infrastructure Leaders
             </p>
-            <p className="mt-6 text-xl text-emerald-400 font-semibold">
-              I Help Infrastructure Businesses Convert Strategy into Measurable Results — Without cosmetic KPIs, siloed execution, or boardroom theory detached from execution reality.
+            <p className="mt-6 text-2xl text-emerald-300 font-semibold leading-snug">
+              I Help Infrastructure Operators Recover EBITDA, Eliminate SLA Penalties, and Institutionalize Execution Discipline Across Africa & Asia.
             </p>
             <p className="mt-6 text-gray-200 leading-relaxed">
-              Strategic infrastructure executive specializing in OKR design, enterprise governance, and telecom energy platforms.
+              Partnering with CEOs, Infra Funds, and TowerCo leadership teams to convert strategic ambition into disciplined, measurable enterprise performance.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <button
@@ -121,6 +122,70 @@ export default function ZainPersonalBrand() {
               alt="Zain ul Aabedeen"
               className="rounded-3xl shadow-2xl w-80 h-96 object-cover object-top border border-white/20"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* WHO I WORK WITH */}
+      <section id="who" className="py-24 px-6 border-t border-white/10 bg-gray-900/80">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-semibold mb-12 flex items-center gap-3">
+            <Briefcase className="text-emerald-400" /> Who I Work With
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">TowerCos & Infra Operators</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Multi-country infrastructure portfolios seeking disciplined execution, reduced SLA exposure, and improved asset-level performance.
+              </p>
+            </div>
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">Infrastructure Funds</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Investment platforms optimizing EBITDA, strengthening governance, and preparing assets for transformation or exit.
+              </p>
+            </div>
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">Energy & ESCO Platforms</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Operators modernizing hybrid energy models, improving DG lifecycle economics, and scaling operational discipline.
+              </p>
+            </div>
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">Executive Leadership Teams</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                CEOs and boards aligning strategic intent with measurable, cross-functional OKR-driven execution.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROOF LAYER */}
+      <section id="proof" className="py-24 px-6 border-t border-white/10 bg-gradient-to-br from-gray-900 via-emerald-900/40 to-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-semibold mb-12 flex items-center gap-3">
+            <BarChart3 className="text-emerald-400" /> Selected Impact
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">EBITDA Protection</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Reduced penalty exposure and operational leakage across multi-opco infrastructure programs through governance and SLA discipline frameworks.
+              </p>
+            </div>
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">Enterprise OKR Rollout</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Designed and cascaded OKR architecture across cross-country portfolios, aligning board-level objectives with field execution metrics.
+              </p>
+            </div>
+            <div className={cardStyle}>
+              <h3 className="text-emerald-300 font-semibold">Energy Platform Optimization</h3>
+              <p className="mt-4 text-gray-300 text-sm">
+                Improved DG lifecycle efficiency, hybrid energy integration, and capital allocation discipline across infrastructure estates.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -175,36 +240,6 @@ export default function ZainPersonalBrand() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* VALUE */}
-      <section id="value" className="relative py-24 px-6 border-t border-white/10 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-110"
-          style={{
-            backgroundImage: "url('/bg-team.jpg')",
-            filter: "blur(6px)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gray-900/75" />
-
-        <div className="relative max-w-5xl mx-auto">
-          <h2 className="text-3xl font-semibold">How I Create Value</h2>
-          <ul className="mt-8 space-y-6 text-gray-300">
-            <li className="flex gap-4 items-start">
-              <Target className="text-emerald-400 mt-1" /> Align strategy into cascaded OKRs with measurable key results.
-            </li>
-            <li className="flex gap-4 items-start">
-              <TrendingUp className="text-emerald-400 mt-1" /> Identify financial leakage impacting EBITDA.
-            </li>
-            <li className="flex gap-4 items-start">
-              <Shield className="text-emerald-400 mt-1" /> Strengthen governance and SLA discipline.
-            </li>
-            <li className="flex gap-4 items-start">
-              <Zap className="text-emerald-400 mt-1" /> Modernize infrastructure for scalable growth.
-            </li>
-          </ul>
         </div>
       </section>
 
