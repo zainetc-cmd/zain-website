@@ -92,7 +92,7 @@ export default function ZainPersonalBrand() {
               I Help Infrastructure Operators Recover EBITDA, Eliminate SLA Penalties, and Institutionalize Execution Discipline Across Africa & Asia.
             </p>
             <p className="mt-6 text-gray-200 leading-relaxed">
-              Partnering with CEOs, Infra Funds, and TowerCo leadership teams to convert strategic ambition into disciplined, measurable enterprise performance.
+              Trusted by CEOs, Infrastructure Funds, and Board-Level Leadership Teams to translate strategic ambition into disciplined, measurable enterprise performance across multi-country operations.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <button
@@ -123,6 +123,24 @@ export default function ZainPersonalBrand() {
               className="rounded-3xl shadow-2xl w-80 h-96 object-cover object-top border border-white/20"
             />
           </div>
+        </div>
+      </section>
+
+      {/* TRUSTED BY */}
+      <section className="py-16 px-6 border-t border-white/10 bg-gray-900">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-sm uppercase tracking-widest text-emerald-400 mb-10">
+            Selected Infrastructure Platforms
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+            <img src="/logo-1.png" alt="Infrastructure Platform 1" className="mx-auto h-12 object-contain grayscale opacity-60 hover:opacity-90 hover:grayscale-0 transition" />
+            <img src="/logo-2.png" alt="Infrastructure Platform 2" className="mx-auto h-12 object-contain grayscale opacity-60 hover:opacity-90 hover:grayscale-0 transition" />
+            <img src="/logo-3.png" alt="Infrastructure Platform 3" className="mx-auto h-12 object-contain grayscale opacity-60 hover:opacity-90 hover:grayscale-0 transition" />
+            <img src="/logo-4.png" alt="Infrastructure Platform 4" className="mx-auto h-12 object-contain grayscale opacity-60 hover:opacity-90 hover:grayscale-0 transition" />
+          </div>
+          <p className="mt-8 text-xs text-gray-500">
+            Logos presented for professional association reference only. Engagements conducted in executive, advisory, or operational capacities subject to confidentiality constraints.
+          </p>
         </div>
       </section>
 
@@ -171,22 +189,35 @@ export default function ZainPersonalBrand() {
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">EBITDA Protection</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Reduced penalty exposure and operational leakage across multi-opco infrastructure programs through governance and SLA discipline frameworks.
+                Strengthened EBITDA protection and reduced SLA penalty exposure across multi-opco infrastructure portfolios through governance restructuring and execution discipline frameworks.
               </p>
             </div>
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">Enterprise OKR Rollout</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Designed and cascaded OKR architecture across cross-country portfolios, aligning board-level objectives with field execution metrics.
+                Designed and institutionalized enterprise OKR architecture across cross-country portfolios, aligning board-level objectives with operational execution and capital accountability.
               </p>
             </div>
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">Energy Platform Optimization</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Improved DG lifecycle efficiency, hybrid energy integration, and capital allocation discipline across infrastructure estates.
+                Optimized DG lifecycle performance, hybrid energy integration, and capital allocation discipline across infrastructure estates to enhance long-term asset value.
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* BOARD ADVISORY POSITIONING */}
+      <section className="py-20 px-6 border-t border-white/10 bg-gray-900">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold mb-6">Board & Executive Advisory Mandate</h2>
+          <p className="text-gray-300 leading-relaxed">
+            Operating at the intersection of strategy, governance, and operational execution, I support boards and executive committees in strengthening infrastructure performance, enhancing capital discipline, and institutionalizing execution rigor across geographically distributed portfolios.
+          </p>
+          <p className="mt-6 text-emerald-300 font-medium">
+            Focus Areas: EBITDA Protection | SLA Governance | Enterprise OKR Institutionalization | Energy Platform Optimization
+          </p>
         </div>
       </section>
 
