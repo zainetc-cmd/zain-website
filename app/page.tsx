@@ -245,10 +245,6 @@ export default function ZainPersonalBrand() {
           </p>
         </div>
       </section>
-          </p>
-        </div>
-      </section>
-
       {/* SERVICES */}
       <section id="services" className="relative py-24 px-6 border-t border-white/10 overflow-hidden">
         <div
