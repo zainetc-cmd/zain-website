@@ -89,7 +89,7 @@ export default function ZainPersonalBrand() {
               Serving Africa & Asia Infrastructure Leaders
             </p>
             <p className="mt-6 text-2xl text-emerald-300 font-semibold leading-snug">
-              I Help Infrastructure Operators Recover EBITDA, Eliminate SLA Penalties, and Institutionalize Execution Discipline Across Africa & Asia.
+              Restoring EBITDA Integrity. Eliminating SLA Exposure. Institutionalizing Execution Discipline Across Africa & Asia.
             </p>
             <p className="mt-6 text-gray-200 leading-relaxed">
               Trusted by CEOs, Infrastructure Funds, and Board-Level Leadership Teams to translate strategic ambition into disciplined, measurable enterprise performance across multi-country operations.
@@ -123,6 +123,15 @@ export default function ZainPersonalBrand() {
               className="rounded-3xl shadow-2xl w-80 h-96 object-cover object-top border border-white/20"
             />
           </div>
+        </div>
+      </section>
+
+      {/* ENGAGEMENT MODEL STRIP */}
+      <section className="py-10 px-6 border-t border-white/10 bg-gray-950">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-xs uppercase tracking-widest text-gray-400">
+            Engagement Models: Board Advisory | Executive Mandates | Strategic Transformation Assignments
+          </p>
         </div>
       </section>
 
@@ -189,22 +198,38 @@ export default function ZainPersonalBrand() {
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">EBITDA Protection</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Strengthened EBITDA protection and reduced SLA penalty exposure across multi-opco infrastructure portfolios through governance restructuring and execution discipline frameworks.
+                Protected multi-country EBITDA exposure through governance redesign, cross-functional execution controls, and SLA penalty mitigation frameworks embedded at operating company level.
               </p>
             </div>
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">Enterprise OKR Rollout</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Designed and institutionalized enterprise OKR architecture across cross-country portfolios, aligning board-level objectives with operational execution and capital accountability.
+                Architected and institutionalized enterprise OKR governance models aligning board mandates with field execution, capital allocation discipline, and cross-functional accountability mechanisms.
               </p>
             </div>
             <div className={cardStyle}>
               <h3 className="text-emerald-300 font-semibold">Energy Platform Optimization</h3>
               <p className="mt-4 text-gray-300 text-sm">
-                Optimized DG lifecycle performance, hybrid energy integration, and capital allocation discipline across infrastructure estates to enhance long-term asset value.
+                Re-engineered DG lifecycle economics, hybrid energy integration strategy, and capital governance frameworks to enhance long-duration infrastructure asset value.
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* STRATEGIC THESIS */}
+      <section className="py-24 px-6 border-t border-white/10 bg-gradient-to-br from-gray-900 via-emerald-900/30 to-gray-900">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold mb-8">Strategic Thesis</h2>
+          <p className="text-gray-300 leading-relaxed">
+            Infrastructure underperformance is rarely a technical failure. It is most often a governance misalignment, an execution discipline gap, or a capital allocation distortion.
+          </p>
+          <p className="mt-6 text-gray-300 leading-relaxed">
+            Sustainable EBITDA protection requires institutional alignment between board intent, executive incentives, and field-level operating controls.
+          </p>
+          <p className="mt-6 text-emerald-300 font-medium">
+            My mandate is to close that gap.
+          </p>
         </div>
       </section>
 
@@ -217,6 +242,9 @@ export default function ZainPersonalBrand() {
           </p>
           <p className="mt-6 text-emerald-300 font-medium">
             Focus Areas: EBITDA Protection | SLA Governance | Enterprise OKR Institutionalization | Energy Platform Optimization
+          </p>
+        </div>
+      </section>
           </p>
         </div>
       </section>
