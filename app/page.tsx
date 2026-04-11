@@ -99,12 +99,15 @@ export default function ZainPersonalBrand() {
         </div>
       </section>
 
-      {/* EXECUTION SYSTEMS */}
+      {/* My Publications */}
       <section id="execution-systems" className="py-24 px-6 bg-slate-900 border-t border-white/10">
         <div className="max-w-6xl mx-auto text-center">
 
-          <h2 className="text-3xl font-semibold mb-6">Execution Systems</h2>
-
+          <h2 className="text-3xl font-semibold mb-6">My Publications</h2>
+<p className="text-gray-500 text-sm text-center max-w-3xl mx-auto mb-8">
+  The following publications represent original frameworks and operating models developed from field experience across multi-country infrastructure environments.  
+  All materials are the intellectual property of Zain ul Aabedeen and are shared for professional reference only.
+</p>
           <p className="text-gray-400 mb-12">
             Field-tested frameworks to eliminate execution gaps and protect infrastructure performance.
           </p>
