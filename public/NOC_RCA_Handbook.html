@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NOC RCA Handbook — iEng DRC O&M</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f4f3ef;min-height:100vh;padding:16px}
+  .page{max-width:860px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.08);overflow:hidden}
+  .top-bar{background:#1e1e1e;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .top-title{color:#fff;font-size:15px;font-weight:600;letter-spacing:.01em}
+  .top-sub{color:#aaa;font-size:11px}
+  .top-badge{background:#333;color:#ccc;font-size:10px;padding:3px 9px;border-radius:10px;border:1px solid #444}
+  .diagram-wrap{padding:14px 14px 6px;background:#fafaf8}
+  svg{display:block;width:100%}
+  .hint{text-align:center;font-size:11px;color:#888;padding:4px 0 10px;font-style:italic}
+  #panel{margin:0 14px 14px;border-radius:12px;overflow:hidden;border:1px solid #e0ddd5;min-height:52px;transition:box-shadow .2s}
+  #panel:not(:empty){box-shadow:0 1px 8px rgba(0,0,0,.07)}
+  .prompt{padding:20px;text-align:center;font-size:12px;color:#999;line-height:1.6}
+  .ph{display:flex;align-items:center;flex-wrap:wrap;gap:7px;padding:10px 14px;border-bottom:1px solid}
+  .pbadge{font-size:9px;font-weight:600;padding:2px 9px;border-radius:10px;letter-spacing:.05em;flex-shrink:0}
+  .ptitle{font-size:13px;font-weight:600;flex:1}
+  .pcat{font-size:10px;opacity:.75;font-weight:500;letter-spacing:.02em}
+  .qflow{padding:10px 14px 14px;display:flex;flex-direction:column}
+  .qstep{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:7px;border:1px solid}
+  .qnum{font-size:9px;font-weight:700;padding:3px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;min-width:26px;text-align:center;letter-spacing:.04em}
+  .qtxt{font-size:12px;line-height:1.6}
+  .qarr{height:16px;display:flex;align-items:center;padding-left:28px;font-size:14px;color:#bbb}
+  .qclose{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border-radius:7px;font-size:12px;font-weight:600;margin-top:2px}
+  .qclose::before{content:'✓';font-size:13px}
+
+  /* Theme: amber */
+  .ta{--b:#FAEEDA;--d:#FAC775;--t:#633806;--nb:#EF9F27;--nc:#412402;--qb:#FAEEDA;--qd:#FAC775;--qc:#854F0B;--nn:#FAC775;--nnc:#633806;--cb:#BA7517;--cc:#fff}
+  /* Theme: blue */
+  .tb{--b:#E6F1FB;--d:#B5D4F4;--t:#0C447C;--nb:#378ADD;--nc:#042C53;--qb:#E6F1FB;--qd:#B5D4F4;--qc:#185FA5;--nn:#B5D4F4;--nnc:#0C447C;--cb:#185FA5;--cc:#fff}
+  /* Theme: coral */
+  .tc{--b:#FAECE7;--d:#F5C4B3;--t:#712B13;--nb:#D85A30;--nc:#fff;--qb:#FAECE7;--qd:#F5C4B3;--qc:#993C1D;--nn:#F5C4B3;--nnc:#712B13;--cb:#D85A30;--cc:#fff}
+  /* Theme: teal */
+  .tt{--b:#E1F5EE;--d:#9FE1CB;--t:#085041;--nb:#1D9E75;--nc:#fff;--qb:#E1F5EE;--qd:#9FE1CB;--qc:#0F6E56;--nn:#9FE1CB;--nnc:#085041;--cb:#1D9E75;--cc:#fff}
+
+  .ph{background:var(--b);border-bottom-color:var(--d)}
+  .pbadge{background:var(--nb);color:var(--nc)}
+  .ptitle,.pcat{color:var(--t)}
+  .qstep{background:var(--qb);border-color:var(--qd)}
+  .qnum{background:var(--nn);color:var(--nnc)}
+  .qtxt{color:var(--qc)}
+  .qclose{background:var(--cb);color:var(--cc)}
+
+  .sn{cursor:pointer;transition:opacity .15s}
+  .sn:hover rect{stroke-width:1.5px}
+  .sn.sel rect{stroke-width:2.5px!important}
+
+  .la{fill:#854F0B}.lb{fill:#185FA5}.lc{fill:#993C1D}.lt{fill:#0F6E56}
+
+  @media(max-width:520px){
+    body{padding:8px}
+    .top-title{font-size:13px}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .page{box-shadow:none;border-radius:0}
+    .hint{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-bar">
+    <div>
+      <div class="top-title">NOC RCA Handbook — 11 Scenarios</div>
+      <div class="top-sub">iEng Group · DRC O&amp;M · Ask FME before closing any ticket</div>
+    </div>
+    <span class="top-badge">Interactive</span>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 680 315" width="100%" role="img">
+      <title>NOC RCA Fishbone — 11 investigation scenarios</title>
+      <desc>Fishbone diagram showing four failure categories. Click a scenario node to view the investigation flow.</desc>
+      <defs>
+        <marker id="arh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Spine -->
+      <line x1="85" y1="170" x2="530" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arh)"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" x="300" y="163" text-anchor="middle" fill="#aaa">investigation spine</text>
+
+      <!-- Rib bones -->
+      <line x1="55" y1="28" x2="205" y2="170" stroke="#EF9F27" stroke-width="1.5"/>
+      <line x1="265" y1="28" x2="415" y2="170" stroke="#378ADD" stroke-width="1.5"/>
+      <line x1="88" y1="295" x2="278" y2="170" stroke="#D85A30" stroke-width="1.5"/>
+      <line x1="378" y1="295" x2="475" y2="170" stroke="#1D9E75" stroke-width="1.5"/>
+
+      <!-- Category tip labels -->
+      <text class="la" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="55" y="17" text-anchor="middle">DG &amp; Battery</text>
+      <text class="lb" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="265" y="17" text-anchor="middle">Power &amp; Electrical</text>
+      <text class="lc" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="88" y="311" text-anchor="middle">Environmental</text>
+      <text class="lt" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="378" y="311" text-anchor="middle">Operations</text>
+
+      <!-- Effect box -->
+      <rect x="533" y="138" width="118" height="64" rx="10" fill="#f0ede8" stroke="#bbb" stroke-width="0.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="592" y="162" text-anchor="middle" fill="#333">Outage /</text>
+      <text font-family="-apple-system,sans-serif" font-size="13" font-weight="600" x="592" y="180" text-anchor="middle" fill="#333">alarm raised</text>
+
+      <!-- ── Amber nodes: S01 S02 S03 ── -->
+      <g id="nS01" class="sn" onclick="sel('S01')">
+        <rect x="27" y="41" width="110" height="24" rx="5" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="82" y="53" text-anchor="middle" dominant-baseline="central" fill="#633806">DG fail to start</text>
+      </g>
+      <g id="nS02" class="sn" onclick="sel('S02')">
+        <rect x="75" y="87" width="110" height="24" rx="5" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="130" y="99" text-anchor="middle" dominant-baseline="central" fill="#633806">Battery low voltage</text>
+      </g>
+      <g id="nS03" class="sn" onclick="sel('S03')">
+        <rect x="123" y="132" width="110" height="24" rx="5" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="178" y="144" text-anchor="middle" dominant-baseline="central" fill="#633806">DG mechanical</text>
+      </g>
+
+      <!-- ── Blue nodes: S04 S08 S09 S10 ── -->
+      <g id="nS04" class="sn" onclick="sel('S04')">
+        <rect x="224" y="30" width="110" height="24" rx="5" fill="#E6F1FB" stroke="#378ADD" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="279" y="42" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Rectifier fault</text>
+      </g>
+      <g id="nS08" class="sn" onclick="sel('S08')">
+        <rect x="260" y="67" width="110" height="24" rx="5" fill="#E6F1FB" stroke="#378ADD" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="315" y="79" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Load imbalance</text>
+      </g>
+      <g id="nS09" class="sn" onclick="sel('S09')">
+        <rect x="298" y="105" width="110" height="24" rx="5" fill="#E6F1FB" stroke="#378ADD" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="353" y="117" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Grid instability</text>
+      </g>
+      <g id="nS10" class="sn" onclick="sel('S10')">
+        <rect x="333" y="140" width="110" height="24" rx="5" fill="#E6F1FB" stroke="#378ADD" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="388" y="152" text-anchor="middle" dominant-baseline="central" fill="#0C447C">ATS switch fail</text>
+      </g>
+
+      <!-- ── Coral nodes: S05 S06 S07 ── -->
+      <g id="nS05" class="sn" onclick="sel('S05')">
+        <rect x="67" y="260" width="110" height="24" rx="5" fill="#FAECE7" stroke="#D85A30" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="122" y="272" text-anchor="middle" dominant-baseline="central" fill="#712B13">Fuel outage</text>
+      </g>
+      <g id="nS06" class="sn" onclick="sel('S06')">
+        <rect x="128" y="221" width="110" height="24" rx="5" fill="#FAECE7" stroke="#D85A30" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="183" y="233" text-anchor="middle" dominant-baseline="central" fill="#712B13">High temp. / rad.</text>
+      </g>
+      <g id="nS07" class="sn" onclick="sel('S07')">
+        <rect x="189" y="181" width="110" height="24" rx="5" fill="#FAECE7" stroke="#D85A30" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="244" y="193" text-anchor="middle" dominant-baseline="central" fill="#712B13">Lightning / surge</text>
+      </g>
+
+      <!-- ── Teal node: S11 ── -->
+      <g id="nS11" class="sn" onclick="sel('S11')">
+        <rect x="370" y="221" width="110" height="24" rx="5" fill="#E1F5EE" stroke="#1D9E75" stroke-width="0.5"/>
+        <text font-family="-apple-system,sans-serif" font-size="11" x="425" y="233" text-anchor="middle" dominant-baseline="central" fill="#085041">Site access delay</text>
+      </g>
+    </svg>
+    <p class="hint">Click any scenario node to open the investigation flow below</p>
+  </div>
+
+  <div id="panel">
+    <div class="prompt">Select a scenario from the fishbone above to view the step-by-step investigation questions</div>
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+const D = {
+  S01: { c:'ta', n:'DG & Battery', t:'DG fail to start', q:[
+    'What failed first — battery, starter motor, solenoid, or DSE logic?',
+    'Which test confirms it — cranking voltage, starter relay continuity, or DSE error code?',
+    'Why did this failure occur today — was there progressive deterioration?',
+    'What PM task should have prevented this?',
+    'What physical evidence from site proves your explanation?'
+  ]},
+  S02: { c:'ta', n:'DG & Battery', t:'Battery low voltage', q:[
+    'Was the battery draining faster than expected, or not charging at all?',
+    'Which test confirms — DC bus reading, alternator test, or battery load test?',
+    'What caused it today — loose lug, sulphation, or failure to charge from rectifier?',
+    'Which PM step should have caught this earlier?',
+    'What physical proof — corrosion, loose lugs, or burnt terminals?'
+  ]},
+  S03: { c:'ta', n:'DG & Battery', t:'DG mechanical failure', q:[
+    'Is this failure due to wear, overload, overheating, vibration, or contamination?',
+    'Which reading or test confirms the exact component that failed?',
+    'What early warning signs were visible in previous PM records?',
+    'Why was this not detected earlier — what inspection gap existed?',
+    'Do you have a clear photo or video showing the failure point?'
+  ]},
+  S04: { c:'tb', n:'Power & Electrical', t:'Rectifier module fault / burnt', q:[
+    'Was this caused by surge, overcurrent, module fatigue, or an earthing issue?',
+    'Which measurement proves it — module voltage reading, fan failure, or thermal marks?',
+    'Why did earthing or SPD protection not prevent this?',
+    'Which PM step should have caught this risk earlier?',
+    'Show evidence: burnt point photo or DSE / controller error code.'
+  ]},
+  S08: { c:'tb', n:'Power & Electrical', t:'Load imbalance / excessive tenant load', q:[
+    'What was the exact ampere or kW load at the moment of failure? Confirm from RMS.',
+    'Which tenant or piece of equipment caused the load spike?',
+    'Why was the overload not detected earlier — was a PM meter check skipped?',
+    'What protection tripped first — breaker, overload relay, or DG auto-shutdown?',
+    'Evidence: panel load reading photo + calculation showing load exceeded DG capacity.'
+  ]},
+  S09: { c:'tb', n:'Power & Electrical', t:'Grid power instability', q:[
+    'Was grid voltage low, unstable, or phase-loss? Provide exact voltage readings.',
+    'Which protection tripped — phase sequence relay, under-voltage relay, or breaker?',
+    'Was there a loose neutral at site or in the upstream supply?',
+    'What grid PM task or wiring inspection was missed or overdue?',
+    'Photo of AC input breaker panel and grid meter reading.'
+  ]},
+  S10: { c:'tb', n:'Power & Electrical', t:'ATS / switching failure', q:[
+    'Did the ATS fail to switch from grid to DG, or from DG back to grid?',
+    'Which contactor failed — the grid contactor or the DG contactor?',
+    'What was the coil voltage on the ATS at the moment switching was attempted?',
+    'Are there burnt marks or welded contacts visible on inspection?',
+    'Which PM lubrication or contact cleaning step was last skipped or overdue?'
+  ]},
+  S05: { c:'tc', n:'Environmental', t:'Fuel-related outage', q:[
+    'Was failure due to empty tank, clogged fuel lines, contaminated diesel, or a planning failure?',
+    'What test confirms — dip reading, CPH × DGRH calculation, overconsumption, leakage, or theft?',
+    'If contamination: why did it enter — supply quality, storage condition, or tank integrity?',
+    'Which preventive or planning measure failed to catch this in time?',
+    'Photo of tank interior, fuel filter, dipstick reading, and DG hour meter.'
+  ]},
+  S06: { c:'tc', n:'Environmental', t:'High temperature / radiator / water pump', q:[
+    'Did temperature reach the critical threshold? Did the thermal safety cut out — what does that tell you?',
+    'Which component failed first — coolant level low, fan belt, radiator fins clogged, or water pump?',
+    'How do you confirm root cause — radiator blockage, external leakage, or end-of-life component?',
+    'Which PM step should have identified and prevented this deterioration?',
+    'Photo evidence: coolant level, fan belt condition, clogged fins, and radiator visual.'
+  ]},
+  S07: { c:'tc', n:'Environmental', t:'Lightning / surge damage', q:[
+    'What path did the surge follow into the system — tower earthing, feeder cable, shelter, or PIU?',
+    'Which component shows the first point of burnt damage?',
+    'Why did surge protection fail — was earthing poor, SPD bypassed, or bonding inadequate?',
+    'Which measurement confirms earthing resistance was outside acceptable limits?',
+    'Photo evidence: burnt entry point, SPD condition, and earthing strip integrity.'
+  ]},
+  S11: { c:'tt', n:'Operations', t:'Site access & delay-to-move RCA', q:[
+    'When exactly was the alarm first raised in the NOC system?',
+    'When did the field technician actually depart for the site?',
+    'What caused the delay — security clearance, weather, distance, vehicle fuel, or staffing?',
+    'Could a standby or nearby team have responded faster — was escalation considered?',
+    'Why was escalation to the next level not triggered earlier — what process was not followed?'
+  ]}
+};
+
+function sel(id) {
+  const s = D[id];
+  document.querySelectorAll('.sn').forEach(n => {
+    n.style.opacity = '0.3';
+    n.classList.remove('sel');
+  });
+  const nd = document.getElementById('n' + id);
+  nd.style.opacity = '1';
+  nd.classList.add('sel');
+
+  const steps = s.q.map((q, i) => {
+    const arrow = i > 0 ? '<div class="qarr">↓</div>' : '';
+    return `${arrow}<div class="qstep"><span class="qnum">Q${i+1}</span><span class="qtxt">${q}</span></div>`;
+  }).join('');
+
+  const p = document.getElementById('panel');
+  p.className = s.c;
+  p.innerHTML = `
+    <div class="ph">
+      <span class="pbadge">${id}</span>
+      <span class="ptitle">${s.t}</span>
+      <span class="pcat">${s.n}</span>
+    </div>
+    <div class="qflow">
+      ${steps}
+      <div class="qarr">↓</div>
+      <div class="qclose">All 5 questions answered — ticket ready to close</div>
+    </div>`;
+
+  p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>

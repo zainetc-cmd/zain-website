@@ -118,7 +118,20 @@ export default function ZainPersonalBrand() {
             </div>
 
             <div className={cardStyle}>
-              <h3 className="text-orange-400 font-semibold">NOC RCA System</h3>
+              <div className={cardStyle}>
+  <h3 className="text-orange-400 font-semibold">NOC RCA System</h3>
+
+  <p className="text-gray-400 text-sm mt-3">
+    Structured 11-scenario interrogation model enabling NOC teams to isolate true root causes and eliminate recurring failures.
+  </p>
+
+  <button
+    className="mt-4 text-sm text-orange-300 hover:text-orange-400 underline"
+    onClick={() => window.open("/NOC_RCA_Handbook.html", "_blank")}
+  >
+    View RCA Handbook →
+  </button>
+</div>
               <p className="text-gray-400 text-sm mt-3">
                 11-scenario questioning model for accurate root cause identification.
               </p>
