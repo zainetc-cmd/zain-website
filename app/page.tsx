@@ -172,32 +172,49 @@ export default function ZainPersonalBrand() {
       </section>
 
       {/* CREDENTIALS */}
-      <section id="credentials" className="py-24 px-6 border-t border-white/10 text-center">
-        <h2 className="text-3xl font-semibold mb-10">Credentials</h2>
+<section id="credentials" className="py-24 px-6 border-t border-white/10 text-center">
+  <h2 className="text-3xl font-semibold mb-10">Credentials</h2>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
-          <div className={card}>
-            <img src="/pmp-cert.pdf" className="mb-4 rounded-lg" />
-            <h3 className="text-orange-400">PMP®</h3>
-            <p className="text-gray-400 text-sm">Valid till 2027</p>
-          </div>
+    {/* PMP */}
+    <div className={card}>
+      <h3 className="text-orange-400 text-lg font-semibold mb-2">PMP®</h3>
+      <p className="text-gray-400 text-sm mb-4">Project Management Institute</p>
+      <p className="text-gray-500 text-sm mb-4">Valid till 2027</p>
 
-          <div className={card}>
-            <img src="/sixsigma.jpg" className="mb-4 rounded-lg" />
-            <h3 className="text-orange-400">Lean Six Sigma Green Belt</h3>
-            <p className="text-gray-400 text-sm">Benchmark Six Sigma</p>
-          </div>
+      <button
+        className="text-blue-400 hover:text-orange-400 underline"
+        onClick={() => window.open("/pmp-cert.pdf", "_blank")}
+      >
+        View Certificate →
+      </button>
+    </div>
 
-          <div className={card}>
-            <img src="/negotiation-cert.pdf" className="mb-4 rounded-lg" />
-            <h3 className="text-orange-400">Negotiation Masterclass</h3>
-            <p className="text-gray-400 text-sm">ADN Group | 2026</p>
-          </div>
+    {/* Six Sigma */}
+    <div className={card}>
+      <img src="/sixsigma.jpg" className="rounded-lg mb-4" />
+      <h3 className="text-orange-400 text-lg font-semibold">Lean Six Sigma Green Belt</h3>
+      <p className="text-gray-400 text-sm">Benchmark Six Sigma</p>
+    </div>
 
-        </div>
-      </section>
+    {/* Negotiation */}
+    <div className={card}>
+      <h3 className="text-orange-400 text-lg font-semibold mb-2">
+        Negotiation Masterclass
+      </h3>
+      <p className="text-gray-400 text-sm mb-4">ADN Group | 2026</p>
 
+      <button
+        className="text-blue-400 hover:text-orange-400 underline"
+        onClick={() => window.open("/negotiation-cert.pdf", "_blank")}
+      >
+        View Certificate →
+      </button>
+    </div>
+
+  </div>
+</section>
       {/* CONTACT */}
       <section id="contact" className="py-24 px-6 text-center bg-slate-800 border-t border-white/10">
         <h2 className="text-3xl font-semibold">Let’s Connect</h2>
