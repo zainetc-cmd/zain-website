@@ -13,26 +13,26 @@ import {
 
 export default function ZainPersonalBrand() {
   const buttonPrimary =
-    "inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-700 px-6 py-3 text-white font-medium transition";
+    "inline-flex items-center gap-2 rounded-2xl bg-orange-500 hover:bg-orange-600 px-6 py-3 text-white font-medium transition";
 
   const buttonOutline =
-    "inline-flex items-center gap-2 rounded-2xl border border-gray-400 px-6 py-3 text-gray-100 hover:border-emerald-400 hover:text-emerald-300 transition";
+    "inline-flex items-center gap-2 rounded-2xl border border-gray-400 px-6 py-3 text-gray-100 hover:border-orange-400 hover:text-orange-300 transition";
 
   const cardStyle =
-    "rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl p-6";
+    "rounded-2xl bg-slate-800 border border-white/10 p-6 hover:border-orange-400 transition";
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen bg-slate-900 text-gray-100">
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-gray-900/90 backdrop-blur-xl border-b border-white/10">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-slate-900/90 backdrop-blur border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <span className="font-semibold">Zain ul Aabedeen</span>
           <div className="flex gap-6 text-sm text-gray-300">
-            <a href="#services" className="hover:text-emerald-400">Services</a>
-            <a href="#who" className="hover:text-emerald-400">Who I Work With</a>
-            <a href="#impact" className="hover:text-emerald-400">Impact</a>
-            <a href="#contact" className="hover:text-emerald-400">Contact</a>
+            <a href="#execution-systems">Systems</a>
+            <a href="#opportunities">Opportunities</a>
+            <a href="#credentials">Credentials</a>
+            <a href="#contact">Contact</a>
           </div>
         </div>
       </nav>
@@ -40,177 +40,170 @@ export default function ZainPersonalBrand() {
       {/* HERO */}
       <section className="relative pt-40 pb-32 px-6 overflow-hidden">
 
-        {/* Background */}
         <div
           className="absolute inset-0 bg-cover bg-center blur-xl scale-110"
           style={{ backgroundImage: "url('/bg-telecom-solar.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-emerald-900/80 to-gray-900/95" />
+        <div className="absolute inset-0 bg-slate-900/90" />
 
         <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-          {/* Text */}
           <div>
             <h1 className="text-4xl md:text-6xl font-bold">
               Zain ul Aabedeen
             </h1>
 
-            <p className="mt-4 text-xs uppercase tracking-widest text-emerald-400">
-              Serving Africa & Asia Infrastructure Leaders
+            <p className="mt-4 text-xs uppercase tracking-widest text-orange-400">
+              Africa & Asia Infrastructure Leadership
             </p>
 
-            <p className="mt-6 text-2xl text-emerald-300 font-semibold leading-snug">
-              Restoring EBITDA Integrity. Eliminating SLA Exposure.
-              Institutionalizing Execution Discipline.
+            <p className="mt-6 text-2xl text-orange-300 font-semibold">
+              Restoring EBITDA. Eliminating SLA Exposure. Driving Execution Discipline.
             </p>
 
-            <p className="mt-6 text-gray-200 leading-relaxed">
-              Board-level advisor and independent strategic consultant
-              partnering with infrastructure operators and funds to align
-              governance, capital discipline, and execution performance
-              across multi-country portfolios.
+            <p className="mt-6 text-gray-300">
+              Strategic infrastructure leader integrating governance, capital efficiency, and execution discipline across multi-country portfolios.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button
-                className={buttonPrimary}
-                onClick={() => window.open("https://wa.me/971505091330", "_blank")}
-              >
-                <Mail size={18} /> Book Strategy Call
+              <button className={buttonPrimary}>
+                <Mail size={18} /> Connect
               </button>
 
               <button
                 className={buttonOutline}
                 onClick={() =>
-                  window.open(
-                    "https://www.linkedin.com/in/zainulaabedeen/",
-                    "_blank"
-                  )
+                  window.open("https://www.linkedin.com/in/zainulaabedeen/")
                 }
               >
                 <Linkedin size={18} /> LinkedIn
               </button>
 
               <button
-                className="inline-flex items-center gap-2 rounded-2xl border border-emerald-400 px-6 py-3 text-emerald-300 hover:bg-emerald-700/20 transition"
+                className="border border-orange-400 px-6 py-3 rounded-2xl text-orange-300 hover:bg-orange-500/20"
                 onClick={() =>
-                  window.open("/Zain_ul_Aabedeen_CV.pdf", "_blank")
+                  window.open("/Zain_ul_Aabedeen_CV.pdf")
                 }
               >
-                <Download size={18} /> Executive Profile
+                <Download size={18} /> Profile
               </button>
             </div>
           </div>
 
-          {/* Headshot */}
           <div className="flex justify-center">
             <img
               src="/headshot.jpg"
-              alt="Zain ul Aabedeen"
-              className="rounded-3xl shadow-2xl w-80 h-96 object-cover object-top border border-white/20"
+              className="rounded-3xl w-80 h-96 object-cover border border-white/20"
             />
           </div>
         </div>
       </section>
 
-      {/* Engagement Strip */}
-      <section className="py-8 bg-gray-950 border-t border-white/10 text-center text-xs uppercase tracking-widest text-gray-400">
-        Board Advisory | Executive Mandates | Strategic Transformation Assignments
-      </section>
+      {/* EXECUTION SYSTEMS */}
+      <section id="execution-systems" className="py-24 px-6 bg-slate-900 border-t border-white/10">
+        <div className="max-w-6xl mx-auto text-center">
 
-      {/* LOGOS */}
-      <section className="py-16 px-6 bg-gray-900 border-t border-white/10 text-center">
-        <p className="text-sm uppercase tracking-widest text-emerald-400 mb-10">
-          Selected Infrastructure Platforms
-        </p>
+          <h2 className="text-3xl font-semibold mb-6">Execution Systems</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center max-w-5xl mx-auto">
-          <img src="/logo-1.png" className="mx-auto h-14 object-contain" />
-          <img src="/logo-2.png" className="mx-auto h-14 object-contain" />
-          <img src="/logo-3.png" className="mx-auto h-14 object-contain" />
-          <img src="/logo-4.png" className="mx-auto h-14 object-contain" />
-        </div>
+          <p className="text-gray-400 mb-12">
+            Field-tested frameworks to eliminate execution gaps and protect infrastructure performance.
+          </p>
 
-        <p className="mt-8 text-xs text-gray-500 max-w-3xl mx-auto">
-          Logos presented for professional association reference only.
-          Engagements conducted in executive, advisory, or operational
-          capacities subject to confidentiality constraints.
-        </p>
-      </section>
-
-      {/* WHO */}
-      <section id="who" className="py-24 px-6 bg-gray-900 border-t border-white/10">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-12 flex items-center gap-3">
-            <Briefcase className="text-emerald-400" /> Who I Work With
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             <div className={cardStyle}>
-              TowerCos & Infrastructure Operators seeking EBITDA discipline
-              and SLA governance control.
+              <h3 className="text-orange-400 font-semibold">Zero Penalty Framework</h3>
+              <p className="text-gray-400 text-sm mt-3">
+                Eliminates SLA penalties through structured governance and RCA discipline.
+              </p>
             </div>
+
             <div className={cardStyle}>
-              Infrastructure Funds optimizing capital efficiency and
-              enterprise performance.
+              <h3 className="text-orange-400 font-semibold">NOC RCA System</h3>
+              <p className="text-gray-400 text-sm mt-3">
+                11-scenario questioning model for accurate root cause identification.
+              </p>
             </div>
+
             <div className={cardStyle}>
-              Energy & ESCO Platforms modernizing hybrid energy models.
-            </div>
-            <div className={cardStyle}>
-              Executive Leadership Teams aligning strategy with measurable execution.
+              <h3 className="text-orange-400 font-semibold">O&M Playbook</h3>
+              <p className="text-gray-400 text-sm mt-3">
+                Aligns strategy, governance, and field execution across portfolios.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* IMPACT */}
-      <section id="impact" className="py-24 px-6 bg-gray-950 border-t border-white/10">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-semibold mb-12 flex items-center gap-3">
-            <BarChart3 className="text-emerald-400" /> Selected Impact
-          </h2>
+      {/* OPPORTUNITIES */}
+      <section id="opportunities" className="py-24 px-6 bg-slate-800 border-t border-white/10">
+        <div className="max-w-5xl mx-auto text-center">
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="text-3xl font-semibold mb-6">Opportunities Desk</h2>
+
+          <p className="text-gray-400 mb-10">
+            Curated infrastructure roles across Africa & emerging markets.
+          </p>
+
+          <div className="space-y-6">
             <div className={cardStyle}>
-              EBITDA protection through governance redesign and execution controls.
+              <h3 className="text-orange-400">Senior O&M Manager – Africa</h3>
+              <p className="text-gray-400 text-sm">TowerCo | Multi-country</p>
             </div>
+
             <div className={cardStyle}>
-              Enterprise OKR institutionalization across multi-country portfolios.
+              <h3 className="text-orange-400">Energy Lead – Middle East</h3>
+              <p className="text-gray-400 text-sm">ESCO Platform</p>
             </div>
-            <div className={cardStyle}>
-              Energy platform optimization and DG lifecycle discipline.
-            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CREDENTIALS */}
+      <section id="credentials" className="py-24 px-6 bg-slate-900 border-t border-white/10 text-center">
+        <h2 className="text-3xl font-semibold mb-6">Credentials</h2>
+
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className={cardStyle}>
+            <h3 className="text-orange-400">PMP®</h3>
+            <p className="text-gray-400 text-sm">Project Management Institute</p>
+          </div>
+
+          <div className={cardStyle}>
+            <h3 className="text-orange-400">Lean Six Sigma</h3>
+            <p className="text-gray-400 text-sm">Process Excellence</p>
+          </div>
+
+          <div className={cardStyle}>
+            <h3 className="text-orange-400">Telecom & Energy</h3>
+            <p className="text-gray-400 text-sm">Infrastructure Systems</p>
           </div>
         </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-24 px-6 bg-gray-900 border-t border-white/10 text-center">
-        <h2 className="text-3xl font-semibold">
-          Ready to Strengthen Infrastructure Performance?
-        </h2>
+      <section id="contact" className="py-24 px-6 text-center bg-slate-800 border-t border-white/10">
+        <h2 className="text-3xl font-semibold">Let’s Connect</h2>
 
         <div className="mt-8">
           <button
             className={buttonPrimary}
             onClick={() => window.open("mailto:za_in@outlook.com")}
           >
-            <Mail size={18} /> Schedule Executive Discussion
+            <Mail size={18} /> Start Conversation
           </button>
         </div>
       </section>
 
-      {/* WhatsApp Button */}
+      {/* WhatsApp */}
       <button
         onClick={() => window.open("https://wa.me/971505091330")}
-        className="fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-2xl z-50"
+        className="fixed bottom-6 right-6 bg-orange-500 p-4 rounded-full shadow-lg"
       >
         <MessageCircle />
       </button>
 
-      <footer className="border-t border-white/10 py-8 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Zain ul Aabedeen | Board-Level Infrastructure Advisor
+      <footer className="py-8 text-center text-gray-400 border-t border-white/10">
+        © {new Date().getFullYear()} Zain ul Aabedeen
       </footer>
     </div>
   );
