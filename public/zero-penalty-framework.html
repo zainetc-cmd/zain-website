@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Penalty Framework | Zak — iEng Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1C2E;
+    --navy-mid: #12283E;
+    --blue: #1A5F8A;
+    --blue-light: #2E86C1;
+    --blue-pale: #D6EAF8;
+    --orange: #E87722;
+    --orange-bright: #F5A623;
+    --orange-pale: #FEF0E0;
+    --grey-dark: #2C3E50;
+    --grey-mid: #5D6D7E;
+    --grey-light: #BDC3C7;
+    --grey-pale: #ECF0F1;
+    --white: #FFFFFF;
+    --slide-max: 1100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV DOTS */
+  .nav-dots {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav-dots a {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: block;
+    transition: background .3s, transform .3s;
+    text-decoration: none;
+  }
+  .nav-dots a:hover { background: var(--orange); transform: scale(1.4); }
+
+  /* SLIDES */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-inner {
+    width: 100%;
+    max-width: var(--slide-max);
+  }
+
+  /* SLIDE BACKGROUNDS */
+  .bg-navy    { background: var(--navy); }
+  .bg-mid     { background: var(--navy-mid); }
+  .bg-blue    { background: var(--blue); }
+  .bg-grey    { background: var(--grey-dark); }
+  .bg-white-section { background: var(--grey-pale); color: var(--navy); }
+
+  /* GEOMETRIC DECORATION */
+  .geo-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  /* TYPOGRAPHY */
+  .slide-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 600;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+  p, li {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: rgba(255,255,255,0.82);
+  }
+  .dark-text p, .dark-text li { color: var(--grey-dark); }
+
+  /* ORANGE LINE ACCENT */
+  .accent-line {
+    width: 60px; height: 4px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin: 14px 0 24px 0;
+  }
+
+  /* PILL TAGS */
+  .pill {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .pill-orange { background: var(--orange); color: white; }
+  .pill-blue   { background: var(--blue-light); color: white; }
+  .pill-grey   { background: var(--grey-mid); color: white; }
+
+  /* GRID HELPERS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+  @media(max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* CARD */
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .card-orange {
+    border-left: 4px solid var(--orange);
+  }
+  .card-blue {
+    border-left: 4px solid var(--blue-light);
+  }
+  .card-white {
+    background: white;
+    color: var(--navy);
+    border: none;
+  }
+  .card-white p, .card-white li { color: var(--grey-dark); }
+  .card-white h4 { color: var(--navy); }
+
+  /* STAT BOX */
+  .stat-box {
+    text-align: center;
+    padding: 20px 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ICON CIRCLE */
+  .icon-circle {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+  }
+  .icon-circle-blue { background: var(--blue-light); }
+
+  /* TIMELINE */
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .timeline-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* FLOW ARROW */
+  .flow-block {
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: center;
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: var(--orange);
+    font-size: 20px;
+    line-height: 1;
+    margin: 4px 0;
+  }
+
+  /* HEATMAP TABLE */
+  .heatmap-table { width: 100%; border-collapse: collapse; }
+  .heatmap-table th {
+    background: var(--blue);
+    padding: 10px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+  .heatmap-table td {
+    padding: 10px 14px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .heatmap-table tr:hover td { background: rgba(255,255,255,0.05); }
+  .heat-high { color: #E74C3C; font-weight: 700; }
+  .heat-med  { color: var(--orange-bright); font-weight: 600; }
+  .heat-bar  { display: flex; align-items: center; gap: 8px; }
+  .heat-fill { height: 8px; border-radius: 4px; background: var(--orange); }
+
+  /* PROGRESS BAR */
+  .progress-row { margin-bottom: 14px; }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 13px; margin-bottom: 5px;
+    color: rgba(255,255,255,0.8);
+  }
+  .progress-bar-bg {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--blue-light), var(--orange));
+  }
+
+  /* PYRAMID */
+  .pyramid-row {
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 3px;
+  }
+  .pyramid-block {
+    height: 54px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  /* DMAIC */
+  .dmaic-step {
+    flex: 1;
+    text-align: center;
+    padding: 18px 10px;
+    border-radius: 8px;
+    position: relative;
+  }
+  .dmaic-row {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .dmaic-letter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .dmaic-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.85;
+  }
+  .dmaic-items {
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    list-style: none;
+  }
+
+  /* LEVEL BADGE */
+  .level-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.05);
+  }
+  .level-badge {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--blue);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--orange-bright);
+  }
+
+  /* PHASE CARD */
+  .phase-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .phase-header {
+    padding: 16px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .phase-body {
+    background: rgba(255,255,255,0.06);
+    padding: 18px 22px;
+  }
+
+  /* QUOTE / CALLOUT */
+  .callout {
+    border-left: 4px solid var(--orange);
+    padding: 16px 20px;
+    background: rgba(232,119,34,0.08);
+    border-radius: 0 8px 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--orange-bright);
+    font-style: italic;
+    margin: 20px 0;
+  }
+
+  /* CHAIN REACTION */
+  .chain-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+  .chain-item {
+    background: var(--blue);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .chain-arrow {
+    color: var(--orange);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* COVER SPECIFIC */
+  #slide-cover {
+    background: linear-gradient(135deg, #071520 0%, #0B1C2E 50%, #142131 100%);
+  }
+  .cover-bg-circle1 { width: 600px; height: 600px; top: -200px; right: -200px; border: 2px solid rgba(232,119,34,0.12); position: absolute; border-radius: 50%; }
+  .cover-bg-circle2 { width: 400px; height: 400px; top: -100px; right: -100px; border: 1px solid rgba(46,134,193,0.15); position: absolute; border-radius: 50%; }
+  .cover-bg-circle3 { width: 300px; height: 300px; bottom: -80px; left: -80px; border: 1px solid rgba(232,119,34,0.08); position: absolute; border-radius: 50%; }
+  .cover-subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .author-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 40px;
+    padding: 10px 20px;
+  }
+  .author-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-light), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .author-name { font-weight: 600; font-size: 15px; }
+  .author-role { font-size: 12px; color: rgba(255,255,255,0.55); }
+
+  /* SEPARATOR */
+  .sep {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 24px 0;
+  }
+
+  /* ZPOS PILLAR */
+  .pillar-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .pillar-top {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .pillar-icon {
+    width: 50px; height: 50px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .pillar-body {
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.2);
+  }
+  .pillar-body li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 5px;
+  }
+  .pillar-body li::before {
+    content: '▸ ';
+    color: var(--orange);
+    font-size: 12px;
+  }
+  .pillar-body ul { list-style: none; }
+
+  /* SECTION HEADER BAR */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .section-number {
+    width: 50px; height: 50px;
+    border-radius: 8px;
+    background: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* BATTERY SOH */
+  .soh-bar {
+    margin-bottom: 10px;
+  }
+  .soh-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .soh-track {
+    height: 22px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .soh-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* FOOTER BAND */
+  .footer-band {
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .footer-band span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* LIST TICKS */
+  .tick-list { list-style: none; }
+  .tick-list li {
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .tick-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  /* CHALLENGE LIST */
+  .challenge-list { list-style: none; }
+  .challenge-list li {
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--blue-light);
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ANIMATE ON SCROLL */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots">
+  <a href="#slide-cover" title="Cover"></a>
+  <a href="#slide-why" title="Why ZPF"></a>
+  <a href="#slide-ecosystem" title="Penalty Ecosystem"></a>
+  <a href="#slide-patterns" title="Country Patterns"></a>
+  <a href="#slide-heatmap" title="Heatmap"></a>
+  <a href="#slide-dmaic" title="DMAIC"></a>
+  <a href="#slide-pyramid" title="Severity Pyramid"></a>
+  <a href="#slide-zpos" title="ZPOS"></a>
+  <a href="#slide-governance" title="Governance"></a>
+  <a href="#slide-process" title="Process"></a>
+  <a href="#slide-digital" title="Digital"></a>
+  <a href="#slide-people" title="People"></a>
+  <a href="#slide-mttr" title="MTTR"></a>
+  <a href="#slide-pm" title="PM Excellence"></a>
+  <a href="#slide-energy" title="Energy"></a>
+  <a href="#slide-roadmap" title="Roadmap"></a>
+  <a href="#slide-closing" title="Closing"></a>
+</nav>
+
+<!-- ============================================================
+     SLIDE 1: COVER
+     ============================================================ -->
+<section class="slide" id="slide-cover" style="background: linear-gradient(135deg, #060F18 0%, #0B1C2E 60%, #0D2137 100%);">
+  <div class="cover-bg-circle1"></div>
+  <div class="cover-bg-circle2"></div>
+  <div class="cover-bg-circle3"></div>
+  <div class="slide-inner fade-in" style="padding-top:60px;">
+    <div style="margin-bottom:16px;">
+      <span class="pill pill-orange">O&M Reference Guide</span>
+      <span class="pill pill-blue">Africa & Asia</span>
+    </div>
+    <h1 style="color:white; max-width:720px; font-size: clamp(42px,7vw,84px); margin-bottom:10px;">
+      ZERO PENALTY<br><span style="color:var(--orange);">FRAMEWORK</span>
+    </h1>
+    <div style="width:80px; height:5px; background:var(--orange); border-radius:3px; margin:18px 0 24px;"></div>
+    <p class="cover-subtitle">
+      A Handbook for O&M Leaders — Building a Predictive, Preventive, and Data-Enabled Operating Model Across Emerging Markets
+    </p>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:40px;">
+      <div class="stat-box" style="min-width:130px;">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat-box" style="min-width:130px;">
+        <div class="stat-num">4</div>
+        <div class="stat-label">ZPOS Layers</div>
+      </div>
+      <div class="stat-box" style="min-width:130px;">
+        <div class="stat-num">90</div>
+        <div class="stat-label">Day Roadmap</div>
+      </div>
+      <div class="stat-box" style="min-width:130px;">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Penalty Target</div>
+      </div>
+    </div>
+
+    <div class="author-tag">
+      <div class="author-avatar">ZA</div>
+      <div>
+        <div class="author-name">Zain Ul Aabedeen (Zak)</div>
+        <div class="author-role">Group Head of Operations · iEng Group</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-band">
+    <span>Zero Penalty Framework</span>
+    <span>iEng Group · Africa & Asia Markets</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 2: WHY THIS MATTERS
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-why">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">01 — Context</div>
+    <h2>Why This Framework Matters</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="align-items:start;">
+      <div>
+        <p style="margin-bottom:20px; font-size:15px;">
+          Telecom infrastructure in emerging markets is undergoing a profound shift. SLAs have evolved from simple uptime metrics into complex performance regimes — touching MTTR, power quality, fuel efficiency, RMS visibility, and PM discipline.
+        </p>
+        <div class="callout">
+          "Penalties are symptoms. The root causes are structural."
+        </div>
+        <p style="font-size:14px; color: rgba(255,255,255,0.65); margin-top:16px;">
+          The ZPF moves away from reactive firefighting and builds a culture of <strong style="color:white;">predictive, preventive, and data-enabled operations</strong>.
+        </p>
+        <div style="margin-top:24px;">
+          <h4 style="color:var(--orange-bright); margin-bottom:12px;">METHODOLOGICAL FOUNDATIONS</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <div class="card card-blue" style="padding:10px 16px; flex:1; min-width:140px;">
+              <div style="font-size:12px; font-weight:700; color:var(--blue-light); text-transform:uppercase; letter-spacing:1px;">PMP</div>
+              <div style="font-size:13px; margin-top:3px; color:rgba(255,255,255,0.75);">Scope · Time · Cost · Quality · Risk</div>
+            </div>
+            <div class="card card-blue" style="padding:10px 16px; flex:1; min-width:140px;">
+              <div style="font-size:12px; font-weight:700; color:var(--blue-light); text-transform:uppercase; letter-spacing:1px;">Lean Six Sigma</div>
+              <div style="font-size:13px; margin-top:3px; color:rgba(255,255,255,0.75);">DMAIC · Variation Reduction</div>
+            </div>
+            <div class="card card-orange" style="padding:10px 16px; flex:1; min-width:140px;">
+              <div style="font-size:12px; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:1px;">Leadership</div>
+              <div style="font-size:13px; margin-top:3px; color:rgba(255,255,255,0.75);">Herzberg · McGregor · Situational</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="color:var(--grey-light); margin-bottom:14px; text-transform:uppercase; font-size:12px; letter-spacing:2px;">Structural Vulnerabilities in Emerging Markets</h4>
+        <ul class="challenge-list">
+          <li>🏔️ Harsh and remote terrains with access constraints</li>
+          <li>⚡ Heavy dependence on diesel and hybrid power systems</li>
+          <li>📡 Multi-vendor RMS environments with visibility gaps</li>
+          <li>🔧 Limited skilled resource availability locally</li>
+          <li>📦 Immature and unreliable supply chains</li>
+          <li>🤝 Subcontractor-driven execution (especially Mali ESCO)</li>
+          <li>🌐 Variable levels of digitalization across OPCOs</li>
+          <li>💰 OPEX pressure from operators demanding leaner models</li>
+        </ul>
+
+        <div style="margin-top:20px; padding:16px; background:rgba(232,119,34,0.08); border-radius:8px; border:1px solid rgba(232,119,34,0.2);">
+          <h4 style="color:var(--orange-bright); margin-bottom:8px;">Target Audience</h4>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <span class="pill pill-orange" style="font-size:11px;">O&M Heads</span>
+            <span class="pill pill-blue" style="font-size:11px;">NOC Managers</span>
+            <span class="pill pill-grey" style="font-size:11px;">Country Heads / CXOs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 3: PENALTY ECOSYSTEM
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-ecosystem">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">02 — Penalty Intelligence</div>
+    <h2>The Penalty Ecosystem Model</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="align-items:center; gap:40px;">
+      <div>
+        <p style="margin-bottom:24px;">
+          Penalties sit at the <strong>top</strong> of the chain, but their root causes originate at the <strong>bottom</strong> — in structure, people, process, and market realities.
+        </p>
+
+        <!-- FLOW DIAGRAM -->
+        <div>
+          <div class="flow-block" style="background: rgba(232,119,34,0.18); border: 1px solid var(--orange); color:white;">
+            <strong style="color:var(--orange);">🎯 CUSTOMER SLA / KPI BREACH</strong><br>
+            <small style="opacity:0.7;">Where penalties are issued</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block" style="background:rgba(46,134,193,0.15); border:1px solid var(--blue-light);">
+            <strong>PENALTY CATEGORIES</strong><br>
+            <small style="opacity:0.7;">MTTR · PMQ · RMS · NUR · Battery Autonomy · RE Ratio</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block">
+            <strong>OPERATIONAL PROCESSES</strong><br>
+            <small style="opacity:0.65;">PM/CM · Access · Spares · NOC · Fuel Management</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block">
+            <strong>STRUCTURE + GOVERNANCE GAPS</strong><br>
+            <small style="opacity:0.65;">Decentralized decisions · Unclear RACI · Weak escalation</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block">
+            <strong>SKILLS & BEHAVIORAL VARIATION</strong><br>
+            <small style="opacity:0.65;">Inconsistent tech quality · Subcontractor misalignment</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block" style="background:rgba(255,255,255,0.04);">
+            <strong>MARKET REALITIES</strong><br>
+            <small style="opacity:0.65;">Terrain · Security · Access · Supply chain gaps</small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>One PM Failure → 7 Penalties</h3>
+        <p style="margin-bottom:20px; font-size:14px;">This cascade illustrates why the ZPF treats PM as the highest-ROI activity in all operations.</p>
+
+        <div class="chain-wrap" style="gap:6px;">
+          <div class="chain-item" style="background:var(--blue);">Poor PM</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(232,119,34,0.3);">DG oil unchanged</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(232,119,34,0.4);">DG Failure</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(231,76,60,0.3);">Battery Drain</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(231,76,60,0.4);">Site Outage</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(231,76,60,0.5);">Slow CM Dispatch</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-item" style="background:rgba(231,76,60,0.6);">MTTR Breach</div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+          <span class="pill pill-orange" style="font-size:11px;">NUR Impact</span>
+          <span class="pill pill-orange" style="font-size:11px;">Fuel Variance</span>
+          <span class="pill pill-orange" style="font-size:11px;">Customer Escalation</span>
+          <span class="pill pill-orange" style="font-size:11px;">Penalty Stack</span>
+        </div>
+
+        <div class="sep"></div>
+
+        <h4 style="color:var(--orange-bright); margin-bottom:12px;">Penalty Mapped to PMP Knowledge Areas</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <tr style="color:rgba(255,255,255,0.45); border-bottom:1px solid rgba(255,255,255,0.08);">
+            <td style="padding:6px 10px;">Penalty Type</td>
+            <td style="padding:6px 10px;">Primary Area</td>
+            <td style="padding:6px 10px;">Secondary</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <td style="padding:7px 10px; font-weight:600; color:var(--orange-bright);">MTTR</td>
+            <td style="padding:7px 10px;">Time Mgmt</td>
+            <td style="padding:7px 10px; color:rgba(255,255,255,0.6);">Communications</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <td style="padding:7px 10px; font-weight:600; color:var(--orange-bright);">PM Adherence</td>
+            <td style="padding:7px 10px;">Schedule Mgmt</td>
+            <td style="padding:7px 10px; color:rgba(255,255,255,0.6);">Resource Mgmt</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <td style="padding:7px 10px; font-weight:600; color:var(--orange-bright);">RMS Visibility</td>
+            <td style="padding:7px 10px;">Integration Mgmt</td>
+            <td style="padding:7px 10px; color:rgba(255,255,255,0.6);">Risk Mgmt</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+            <td style="padding:7px 10px; font-weight:600; color:var(--orange-bright);">Battery Autonomy</td>
+            <td style="padding:7px 10px;">Resource Mgmt</td>
+            <td style="padding:7px 10px; color:rgba(255,255,255,0.6);">Cost Mgmt</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 10px; font-weight:600; color:var(--orange-bright);">NUR</td>
+            <td style="padding:7px 10px;">Risk Mgmt</td>
+            <td style="padding:7px 10px; color:rgba(255,255,255,0.6);">Integration Mgmt</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 4: COUNTRY PATTERNS
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-patterns">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">03 — Cross-Country Analysis</div>
+    <h2>Penalty Patterns Across Operations</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <div style="padding:16px 20px; background:var(--blue); border-radius:10px 10px 0 0;">
+          <h3 style="color:white; font-size:18px; margin-bottom:0;">🏢 In-House O&M Markets</h3>
+          <div style="font-size:13px; opacity:0.7; margin-top:4px;">Pakistan · Philippines · Myanmar · Nigeria · DRC · Uganda · Afghanistan</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05); border-radius:0 0 10px 10px; padding:20px;">
+          <h4 style="color:var(--orange-bright); margin-bottom:12px;">MTTR Breach Root Causes (Illustrative)</h4>
+          <div class="progress-row">
+            <div class="progress-label"><span>Travel Time Issues</span><span>42%</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" style="width:42%;"></div></div>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; padding-left:4px;">Traffic delays · Technician distance · Vehicle availability</div>
+          <div class="progress-row">
+            <div class="progress-label"><span>Access Delays</span><span>23%</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" style="width:23%;"></div></div>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; padding-left:4px;">Security gatekeepers · Hold periods</div>
+          <div class="progress-row">
+            <div class="progress-label"><span>Spares Readiness</span><span>18%</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" style="width:18%;"></div></div>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; padding-left:4px;">Batteries · DG parts · Tools</div>
+          <div class="progress-row">
+            <div class="progress-label"><span>NOC Coordination</span><span>17%</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" style="width:17%;"></div></div>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px; padding-left:4px;">Late dispatch · Wrong fault classification</div>
+
+          <div style="margin-top:16px; padding:12px; background:rgba(46,134,193,0.1); border-radius:6px; border:1px solid rgba(46,134,193,0.2);">
+            <div style="font-size:13px; color:rgba(255,255,255,0.7);">RMS visibility is relatively <strong style="color:white;">more stable</strong> in in-house markets, but impacted by OEM-specific compatibility issues</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="padding:16px 20px; background:var(--orange); border-radius:10px 10px 0 0;">
+          <h3 style="color:white; font-size:18px; margin-bottom:0;">🌍 Subcontractor Model</h3>
+          <div style="font-size:13px; opacity:0.8; margin-top:4px;">Mali ESCO — 4 Subcontractors</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05); border-radius:0 0 10px 10px; padding:20px;">
+          <h4 style="color:var(--orange-bright); margin-bottom:14px;">ESCO KPI Risk Layers</h4>
+          <ul class="tick-list" style="margin-bottom:16px;">
+            <li>RMS visibility drives <strong style="color:white;">almost all other KPIs</strong></li>
+            <li>NUR penalties have the heaviest financial impact</li>
+            <li>Battery autonomy breaches linked to load variation & DG misalignment</li>
+            <li>RE Ratio requires <strong style="color:white;">predictive load forecasting</strong></li>
+            <li>PM Quality varies significantly across 4 subcontractors</li>
+          </ul>
+          <div style="margin-top:16px;">
+            <h4 style="font-size:12px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Additional Risk Multipliers</h4>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                <span style="font-size:13px;">Multi-subcontractor skill variance</span>
+                <span class="pill pill-orange" style="font-size:10px; margin:0;">HIGH RISK</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                <span style="font-size:13px;">RMS multi-vendor environment</span>
+                <span class="pill pill-orange" style="font-size:10px; margin:0;">HIGH RISK</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                <span style="font-size:13px;">ESCO financial exposure on NUR</span>
+                <span class="pill pill-orange" style="font-size:10px; margin:0;">CRITICAL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 5: HEATMAP
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-heatmap">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">04 — Mali ESCO Intelligence</div>
+    <h2>Penalty Exposure Heatmap</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="align-items:start; gap:40px;">
+      <div>
+        <p style="margin-bottom:20px; font-size:14px; color:rgba(255,255,255,0.7);">
+          This heatmap helps NOC Heads and O&M Directors prioritize their focus by mapping each KPI against its severity level and breach frequency. Financial exposure is maximum where both are high.
+        </p>
+        <table class="heatmap-table">
+          <thead>
+            <tr>
+              <th>KPI</th>
+              <th>Severity</th>
+              <th>Frequency Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RMS Visibility</strong></td>
+              <td><span class="heat-high">● High</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:90px; background:#E74C3C;"></div>
+                  <span style="font-size:12px;">9/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>NUR</strong></td>
+              <td><span class="heat-high">● High</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:80px; background:#E74C3C;"></div>
+                  <span style="font-size:12px;">8/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Configuration Compliance</strong></td>
+              <td><span class="heat-high">● High</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:70px; background:#E74C3C;"></div>
+                  <span style="font-size:12px;">7/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Solar / Hybrid RE Ratio</strong></td>
+              <td><span class="heat-high">● High</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:70px; background:#E74C3C;"></div>
+                  <span style="font-size:12px;">7/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Power Restoration MTTR</strong></td>
+              <td><span class="heat-high">● High</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:70px; background:var(--orange);"></div>
+                  <span style="font-size:12px;">7/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>PM Quality</strong></td>
+              <td><span class="heat-med">● Medium</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:80px; background:var(--orange);"></div>
+                  <span style="font-size:12px;">8/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Battery Autonomy</strong></td>
+              <td><span class="heat-med">● Medium</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:70px; background:var(--orange);"></div>
+                  <span style="font-size:12px;">7/10</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Fuel Efficiency</strong></td>
+              <td><span class="heat-med">● Medium</span></td>
+              <td>
+                <div class="heat-bar">
+                  <div class="heat-fill" style="width:50px; background:var(--blue-light);"></div>
+                  <span style="font-size:12px;">5/10</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h3>Severity Pyramid</h3>
+        <p style="font-size:14px; margin-bottom:24px; color:rgba(255,255,255,0.7);">Penalties are never caused at the top. They are <strong style="color:white;">generated at the bottom</strong>.</p>
+
+        <!-- PYRAMID SVG -->
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:400px; display:block; margin:0 auto;">
+          <!-- TOP tier -->
+          <polygon points="200,20 100,100 300,100" fill="#E87722" opacity="0.9"/>
+          <text x="200" y="60" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="13" fill="white">STRATEGIC PENALTIES</text>
+          <text x="200" y="78" text-anchor="middle" font-family="Barlow, sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">NUR · RMS · RE Ratio · Config</text>
+
+          <!-- MID tier -->
+          <polygon points="100,106 300,106 340,186 60,186" fill="#1A5F8A" opacity="0.9"/>
+          <text x="200" y="140" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="13" fill="white">OPERATIONAL PENALTIES</text>
+          <text x="200" y="158" text-anchor="middle" font-family="Barlow, sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">PMQ · PM Adherence · MTTR</text>
+
+          <!-- BOTTOM tier -->
+          <polygon points="60,192 340,192 380,265 20,265" fill="#2C3E50" opacity="0.95"/>
+          <text x="200" y="224" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="13" fill="white">MICRO-PROCESS FAILURES</text>
+          <text x="200" y="244" text-anchor="middle" font-family="Barlow, sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Access · Spares · Logs · Coordination</text>
+        </svg>
+
+        <div style="margin-top:20px; display:flex; gap:10px;">
+          <div style="flex:1; padding:12px; background:rgba(232,119,34,0.1); border:1px solid rgba(232,119,34,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:11px; color:var(--orange); font-weight:700; text-transform:uppercase; letter-spacing:1px;">Issued at Top</div>
+            <div style="font-size:24px; font-weight:800; font-family:'Barlow Condensed';">Penalties</div>
+          </div>
+          <div style="flex:1; padding:12px; background:rgba(26,95,138,0.2); border:1px solid rgba(46,134,193,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:11px; color:var(--blue-light); font-weight:700; text-transform:uppercase; letter-spacing:1px;">Generated at Bottom</div>
+            <div style="font-size:24px; font-weight:800; font-family:'Barlow Condensed';">Root Causes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 6: DMAIC
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-dmaic">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">05 — Problem Solving</div>
+    <h2>Root Cause Analysis via DMAIC</h2>
+    <div class="accent-line"></div>
+
+    <p style="max-width:700px; margin-bottom:30px; color:rgba(255,255,255,0.75);">
+      The ZPF uses Lean Six Sigma's DMAIC methodology to deconstruct penalties systematically — moving from symptom identification to sustainable control.
+    </p>
+
+    <div class="dmaic-row">
+      <div class="dmaic-step" style="background:rgba(232,119,34,0.15); border:1px solid rgba(232,119,34,0.3);">
+        <div class="dmaic-letter" style="color:var(--orange);">D</div>
+        <div class="dmaic-title">Define</div>
+        <ul class="dmaic-items">
+          <li>Identify the penalty type</li>
+          <li>Map SLA breach signature</li>
+          <li>Locate impacted sites/clusters</li>
+          <li>Confirm scope boundary</li>
+        </ul>
+      </div>
+      <div class="dmaic-step" style="background:rgba(46,134,193,0.15); border:1px solid rgba(46,134,193,0.3);">
+        <div class="dmaic-letter" style="color:var(--blue-light);">M</div>
+        <div class="dmaic-title">Measure</div>
+        <ul class="dmaic-items">
+          <li>Collect timestamps & RMS logs</li>
+          <li>Get PM completion dates</li>
+          <li>Validate data consistency</li>
+          <li>Critical in Africa operations</li>
+        </ul>
+      </div>
+      <div class="dmaic-step" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);">
+        <div class="dmaic-letter" style="color:var(--grey-light);">A</div>
+        <div class="dmaic-title">Analyze</div>
+        <ul class="dmaic-items">
+          <li>Fishbone + 5 Why analysis</li>
+          <li>Region-to-region variance</li>
+          <li>Identify structural causes</li>
+          <li>Pareto of top contributors</li>
+        </ul>
+      </div>
+      <div class="dmaic-step" style="background:rgba(46,134,193,0.15); border:1px solid rgba(46,134,193,0.3);">
+        <div class="dmaic-letter" style="color:var(--blue-light);">I</div>
+        <div class="dmaic-title">Improve</div>
+        <ul class="dmaic-items">
+          <li>Targeted action plans</li>
+          <li>SOP updates & training</li>
+          <li>Process redesign</li>
+          <li>Quick wins implementation</li>
+        </ul>
+      </div>
+      <div class="dmaic-step" style="background:rgba(232,119,34,0.15); border:1px solid rgba(232,119,34,0.3);">
+        <div class="dmaic-letter" style="color:var(--orange);">C</div>
+        <div class="dmaic-title">Control</div>
+        <ul class="dmaic-items">
+          <li>Dashboards & control charts</li>
+          <li>NOC monitoring cycles</li>
+          <li>Monthly audits</li>
+          <li>Penalty recurrence gate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;">
+      <h4 style="color:var(--grey-light); margin-bottom:12px; font-size:12px; text-transform:uppercase; letter-spacing:2px;">Supporting Diagnostic Tools</h4>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <div class="card card-blue" style="padding:12px 18px; flex:1; min-width:160px;">
+          <div style="font-size:20px; margin-bottom:4px;">📊</div>
+          <div style="font-weight:700; font-size:14px;">SIPOC</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6);">Process scope mapping</div>
+        </div>
+        <div class="card card-blue" style="padding:12px 18px; flex:1; min-width:160px;">
+          <div style="font-size:20px; margin-bottom:4px;">📈</div>
+          <div style="font-weight:700; font-size:14px;">Control Charts</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6);">Variance tracking over time</div>
+        </div>
+        <div class="card card-blue" style="padding:12px 18px; flex:1; min-width:160px;">
+          <div style="font-size:20px; margin-bottom:4px;">🐟</div>
+          <div style="font-weight:700; font-size:14px;">Fishbone / Ishikawa</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6);">Multi-factor RCA</div>
+        </div>
+        <div class="card card-blue" style="padding:12px 18px; flex:1; min-width:160px;">
+          <div style="font-size:20px; margin-bottom:4px;">🗺️</div>
+          <div style="font-weight:700; font-size:14px;">Value Stream Map</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6);">End-to-end process flow</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 7: ZPOS (was slide-pyramid before, now ZPOS overview)
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-pyramid">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">06 — Operating Model</div>
+    <h2>Zero Penalty Operating System</h2>
+    <div class="accent-line"></div>
+    <p style="max-width:700px; margin-bottom:30px; color:rgba(255,255,255,0.7);">
+      Most penalties don't occur because teams lack effort. They occur because the operating model lacks <strong style="color:white;">consistency</strong>. ZPOS removes ambiguity, eliminates variance, and converts O&M into a predictable, data-driven system.
+    </p>
+
+    <div class="grid-4" style="margin-bottom:30px;">
+      <div class="pillar-card">
+        <div class="pillar-top" style="background: linear-gradient(135deg, #1A5F8A, #12283E);">
+          <div class="pillar-icon" style="background:rgba(255,255,255,0.15); font-size:26px;">🏛️</div>
+          <div>
+            <div style="font-family:'Barlow Condensed'; font-size:20px; font-weight:700;">Governance</div>
+            <div style="font-size:11px; opacity:0.65; text-transform:uppercase; letter-spacing:1px;">Layer 1</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <ul>
+            <li>iTSM as single source of truth</li>
+            <li>NOC as control tower</li>
+            <li>Clear RACI framework</li>
+            <li>Operating cadences</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-top" style="background: linear-gradient(135deg, #E87722, #9D4F10);">
+          <div class="pillar-icon" style="background:rgba(255,255,255,0.15); font-size:26px;">⚙️</div>
+          <div>
+            <div style="font-family:'Barlow Condensed'; font-size:20px; font-weight:700;">Process</div>
+            <div style="font-size:11px; opacity:0.65; text-transform:uppercase; letter-spacing:1px;">Layer 2</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <ul>
+            <li>PM Excellence Model</li>
+            <li>CM / MTTR framework</li>
+            <li>Change Management SOP</li>
+            <li>Escalation ladder</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-top" style="background: linear-gradient(135deg, #1A5F8A, #0B1C2E);">
+          <div class="pillar-icon" style="background:rgba(255,255,255,0.15); font-size:26px;">📡</div>
+          <div>
+            <div style="font-family:'Barlow Condensed'; font-size:20px; font-weight:700;">Digital</div>
+            <div style="font-size:11px; opacity:0.65; text-transform:uppercase; letter-spacing:1px;">Layer 3</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <ul>
+            <li>RMS ≥ 99% visibility target</li>
+            <li>AI & predictive analytics</li>
+            <li>Auto-ticket integration</li>
+            <li>Fuel anomaly detection</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-top" style="background: linear-gradient(135deg, #2C3E50, #1A252F);">
+          <div class="pillar-icon" style="background:rgba(255,255,255,0.15); font-size:26px;">👥</div>
+          <div>
+            <div style="font-family:'Barlow Condensed'; font-size:20px; font-weight:700;">People</div>
+            <div style="font-size:11px; opacity:0.65; text-transform:uppercase; letter-spacing:1px;">Layer 4</div>
+          </div>
+        </div>
+        <div class="pillar-body">
+          <ul>
+            <li>L1–L5 competency model</li>
+            <li>Subcontractor scorecards</li>
+            <li>Herzberg motivation model</li>
+            <li>Situational leadership</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="max-width:700px;">
+      "Because without governance, excellence becomes dependent on individuals instead of systems — and systems scale, people don't."
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 8: GOVERNANCE
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-zpos">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">07 — Layer 1</div>
+    <h2>Governance: Structure Before Performance</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <h3>Governance Flow</h3>
+        <div style="margin-bottom:24px;">
+          <div class="flow-block" style="background:rgba(46,134,193,0.18); border:1px solid rgba(46,134,193,0.4);">
+            <strong>📡 RMS ALARMS</strong><br>
+            <small style="opacity:0.7;">Real-time signals from the field</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div class="flow-block" style="background:rgba(232,119,34,0.18); border:1px solid var(--orange);">
+            <strong>🧠 NOC — Control Tower</strong><br>
+            <small style="opacity:0.7;">Incident prioritization · Dispatch · Escalation · Real-time tracking</small>
+          </div>
+          <div class="flow-arrow">▼</div>
+          <div style="display:flex; gap:10px;">
+            <div class="flow-block" style="flex:1;">
+              <strong>🔧 Field Teams</strong><br>
+              <small style="opacity:0.65;">Direct staff</small>
+            </div>
+            <div class="flow-block" style="flex:1;">
+              <strong>🤝 Subcon Teams</strong><br>
+              <small style="opacity:0.65;">Mali model</small>
+            </div>
+          </div>
+          <div class="flow-arrow">▲</div>
+          <div class="flow-block">
+            <strong>📋 iTSM — Single Source of Truth</strong><br>
+            <small style="opacity:0.65;">PM/CM · Work Orders · Incidents · Access approvals · Logs</small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Daily Operating Cadence</h3>
+        <p style="font-size:14px; margin-bottom:18px; color:rgba(255,255,255,0.7);">Mature operations require predictable rhythms. Ad hoc decision-making is a direct path to penalties.</p>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:22px;">
+          <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:rgba(232,119,34,0.1); border-radius:8px; border:1px solid rgba(232,119,34,0.2);">
+            <div style="color:var(--orange); font-weight:800; font-family:'Barlow Condensed'; font-size:20px; min-width:36px;">D</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Daily NOC — O&M Sync Call</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Open tickets · Escalations · Dispatch status</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:rgba(46,134,193,0.1); border-radius:8px; border:1px solid rgba(46,134,193,0.2);">
+            <div style="color:var(--blue-light); font-weight:800; font-family:'Barlow Condensed'; font-size:20px; min-width:36px;">W</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Weekly Performance Heatmap Review</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">KPI tracking · Hotspot identification</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+            <div style="color:var(--grey-light); font-weight:800; font-family:'Barlow Condensed'; font-size:20px; min-width:36px;">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Monthly RCA Review</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Root cause + action plan follow-up</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:rgba(255,255,255,0.05); border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+            <div style="color:var(--grey-light); font-weight:800; font-family:'Barlow Condensed'; font-size:20px; min-width:36px;">Q</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Quarterly Process Audits</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Maturity assessment + SOP review</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="color:var(--orange-bright); margin-bottom:10px;">RACI Simplified</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <tr style="background:rgba(255,255,255,0.06);">
+            <td style="padding:8px 12px; font-weight:700; color:var(--orange-bright); border-radius:4px 0 0 0;">NOC</td>
+            <td style="padding:8px 12px; color:rgba(255,255,255,0.8);">Owns reaction speed</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:700; color:var(--blue-light);">O&M</td>
+            <td style="padding:8px 12px; color:rgba(255,255,255,0.8);">Owns field execution</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,0.04);">
+            <td style="padding:8px 12px; font-weight:700; color:var(--grey-light);">Subcontractor</td>
+            <td style="padding:8px 12px; color:rgba(255,255,255,0.8);">Owns manpower discipline</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:700;">Management</td>
+            <td style="padding:8px 12px; color:rgba(255,255,255,0.8);">Owns removing structural barriers</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 9: PROCESS LAYER
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-governance">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">08 — Layer 2</div>
+    <h2>Process: Disciplined Predictability</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <h3>PM Excellence Model</h3>
+        <p style="font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">
+          PM is the foundation of penalty prevention. <strong style="color:var(--orange);">Every $1 in PM prevents $5 in CM penalties.</strong>
+        </p>
+        <div style="background:rgba(255,255,255,0.04); border-radius:10px; overflow:hidden; margin-bottom:20px;">
+          <div style="padding:12px 16px; background:rgba(232,119,34,0.15); border-bottom:1px solid rgba(232,119,34,0.2);">
+            <div style="font-family:'Barlow Condensed'; font-size:16px; font-weight:700;">PM Quality Scorecard</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px;">Total: 100 Points</div>
+          </div>
+          <div style="padding:16px;">
+            <div class="progress-row">
+              <div class="progress-label"><span>⚙️ DG Maintenance (Impacts MTBF)</span><span style="color:var(--orange);">25pts</span></div>
+              <div class="progress-bar-bg"><div class="progress-fill" style="width:25%;"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>🔋 Battery Inspection (Fuel / MTTR)</span><span style="color:var(--orange);">25pts</span></div>
+              <div class="progress-bar-bg"><div class="progress-fill" style="width:25%;"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>📡 RMS / Alarms Checks (Fuel / MTTR)</span><span style="color:var(--blue-light);">20pts</span></div>
+              <div class="progress-bar-bg"><div class="progress-fill" style="width:20%; background:var(--blue-light);"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>🔌 Electrical Panel (MTBF / H&S)</span><span style="color:var(--blue-light);">20pts</span></div>
+              <div class="progress-bar-bg"><div class="progress-fill" style="width:20%; background:var(--blue-light);"></div></div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label"><span>🧹 Site Housekeeping (H&S)</span><span style="color:var(--grey-light);">10pts</span></div>
+              <div class="progress-bar-bg"><div class="progress-fill" style="width:10%; background:var(--grey-mid);"></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:14px 16px;">
+          <h4 style="color:var(--orange-bright); font-size:13px; margin-bottom:10px;">PM SUCCESS EQUATION</h4>
+          <div style="text-align:center; font-family:'Barlow Condensed'; font-size:18px; font-weight:700; padding:10px; background:rgba(232,119,34,0.08); border-radius:6px;">
+            PM Success = <span style="color:var(--orange);">Adherence</span> × <span style="color:var(--blue-light);">Quality</span> × <span style="color:var(--grey-light);">Verification</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>CM / MTTR Framework</h3>
+        <p style="font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">CM is where most penalties originate. A clear escalation ladder removes panic-driven responses.</p>
+
+        <div style="position:relative; margin-bottom:20px;">
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(46,134,193,0.12); border:1px solid rgba(46,134,193,0.25); border-radius:8px; margin-bottom:8px;">
+            <div style="min-width:80px; text-align:center; background:var(--blue-light); border-radius:6px; padding:6px; font-family:'Barlow Condensed'; font-weight:800; font-size:14px;">0–30 min</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">NOC + Technician</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Diagnostic window · Remote triage · Dispatch decision</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(232,119,34,0.1); border:1px solid rgba(232,119,34,0.25); border-radius:8px; margin-bottom:8px;">
+            <div style="min-width:80px; text-align:center; background:var(--orange); border-radius:6px; padding:6px; font-family:'Barlow Condensed'; font-weight:800; font-size:14px;">30–60 min</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">O&M Regional Head</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Dispatch + access coordination · First-hour fix target</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.25); border-radius:8px; margin-bottom:8px;">
+            <div style="min-width:80px; text-align:center; background:#E74C3C; border-radius:6px; padding:6px; font-family:'Barlow Condensed'; font-weight:800; font-size:14px;">> 60 min</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">O&M Head + Customer Interface</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Escalation + proactive customer communication</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(231,76,60,0.15); border:1px solid rgba(231,76,60,0.35); border-radius:8px;">
+            <div style="min-width:80px; text-align:center; background:#C0392B; border-radius:6px; padding:6px; font-family:'Barlow Condensed'; font-weight:800; font-size:12px;">Prolonged</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Group O&M Escalation</div>
+              <div style="font-size:12px; color:rgba(255,255,255,0.55);">Strategic-level intervention required</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="color:var(--orange-bright); margin-bottom:10px;">Change Management Flow</h4>
+        <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+          <div style="padding:8px 12px; background:rgba(46,134,193,0.15); border-radius:6px; font-size:13px; font-weight:600;">Impact Analysis</div>
+          <div style="color:var(--orange);">→</div>
+          <div style="padding:8px 12px; background:rgba(46,134,193,0.15); border-radius:6px; font-size:13px; font-weight:600;">Approval</div>
+          <div style="color:var(--orange);">→</div>
+          <div style="padding:8px 12px; background:rgba(232,119,34,0.15); border-radius:6px; font-size:13px; font-weight:600;">Implementation</div>
+          <div style="color:var(--orange);">→</div>
+          <div style="padding:8px 12px; background:rgba(232,119,34,0.15); border-radius:6px; font-size:13px; font-weight:600;">Validation</div>
+          <div style="color:var(--orange);">→</div>
+          <div style="padding:8px 12px; background:rgba(100,180,100,0.15); border-radius:6px; font-size:13px; font-weight:600;">Closure</div>
+        </div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-top:8px;">Applies to: upgrades · battery swaps · RMS config · DG overhauls</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 10: DIGITAL LAYER
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-process">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">09 — Layer 3</div>
+    <h2>Digital & Automation: Visibility = Control</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <h3>RMS Health Framework</h3>
+        <p style="font-size:14px; margin-bottom:18px; color:rgba(255,255,255,0.7);">If RMS is weak, everything becomes reactive. The ZPOS sets non-negotiable RMS standards across all OPCOs.</p>
+
+        <ul class="tick-list" style="margin-bottom:20px;">
+          <li>RMS uptime target: <strong style="color:var(--orange);">≥ 99%</strong></li>
+          <li>Correct configuration across all sites</li>
+          <li>Heartbeat every <strong style="color:white;">15 minutes</strong></li>
+          <li>Auto-ticketing integration where possible</li>
+          <li>Battery, RE, DG, and fuel sensors must be <strong style="color:white;">active and visible</strong></li>
+          <li>RMS offline → resolved within <strong style="color:var(--orange);">60 minutes</strong></li>
+        </ul>
+
+        <h4 style="color:var(--orange-bright); margin-bottom:12px;">RMS Offline Risk Multiplier</h4>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:6px;">
+            <div style="width:80px; font-family:'Barlow Condensed'; font-weight:800; color:var(--blue-light);">1 hr offline</div>
+            <div style="flex:1; height:10px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+              <div style="width:30%; height:100%; background:var(--blue-light); border-radius:4px;"></div>
+            </div>
+            <div style="font-weight:700; color:var(--orange-bright); min-width:40px;">3×</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.6);">MTTR risk</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:6px;">
+            <div style="width:80px; font-family:'Barlow Condensed'; font-weight:800; color:var(--orange);">4 hrs offline</div>
+            <div style="flex:1; height:10px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+              <div style="width:50%; height:100%; background:var(--orange); border-radius:4px;"></div>
+            </div>
+            <div style="font-weight:700; color:var(--orange-bright); min-width:40px;">5×</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.6);">outage risk</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:6px;">
+            <div style="width:80px; font-family:'Barlow Condensed'; font-weight:800; color:#E74C3C;">12 hrs offline</div>
+            <div style="flex:1; height:10px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
+              <div style="width:70%; height:100%; background:#E74C3C; border-radius:4px;"></div>
+            </div>
+            <div style="font-weight:700; color:#E74C3C; min-width:40px;">7×</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.6);">battery failure risk</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>AI & Predictive Analytics</h3>
+        <p style="font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">
+          Industry benchmarks from Huawei iManager, Delta AI, and Ericsson Predictive O&M confirm: <strong style="color:white;">AI-enabled visibility reduces penalties faster than manpower additions.</strong>
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+          <div style="display:flex; align-items:center; gap:14px; padding:14px; background:rgba(232,119,34,0.08); border:1px solid rgba(232,119,34,0.2); border-radius:8px;">
+            <div style="font-family:'Barlow Condensed'; font-size:36px; font-weight:800; color:var(--orange); min-width:70px; text-align:center;">30-40%</div>
+            <div style="font-size:14px; color:rgba(255,255,255,0.8);">Improvement in <strong style="color:white;">fuel theft detection</strong> through AI-driven anomaly monitoring</div>
+          </div>
+          <div class="card card-orange" style="padding:14px;">
+            <div style="font-size:14px; color:rgba(255,255,255,0.8);">🔮 <strong style="color:white;">Predictive alarms</strong> for battery and inverter issues before failure</div>
+          </div>
+          <div class="card card-blue" style="padding:14px;">
+            <div style="font-size:14px; color:rgba(255,255,255,0.8);">⚡ <strong style="color:white;">Faster restoration</strong> of pattern-based faults through historical data analysis</div>
+          </div>
+        </div>
+
+        <h4 style="color:var(--orange-bright); margin-bottom:10px;">RMS Visibility Funnel (Target State)</h4>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="background:var(--blue); border-radius:6px; padding:8px 16px; text-align:center; font-weight:600; font-size:14px;">100% Sites in Fleet</div>
+          <div style="text-align:center; color:var(--orange);">▼</div>
+          <div style="background:rgba(46,134,193,0.6); border-radius:6px; padding:8px 16px; text-align:center; font-size:14px;"><strong style="color:var(--orange-bright);">≥99%</strong> Visible Sites (ZPOS Target)</div>
+          <div style="text-align:center; color:var(--orange);">▼</div>
+          <div style="background:rgba(46,134,193,0.4); border-radius:6px; padding:8px 16px; text-align:center; font-size:14px;"><strong>≥90%</strong> Real-Time Telemetry</div>
+          <div style="text-align:center; color:var(--orange);">▼</div>
+          <div style="background:rgba(46,134,193,0.2); border-radius:6px; padding:8px 16px; text-align:center; font-size:14px; color:rgba(255,255,255,0.8);">70%+ Actionable Predictive Insights</div>
+        </div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.45); margin-top:8px;">Current: Most OPCOs at 90–95% · ZPOS aims for full reliability</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 11: PEOPLE LAYER
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-digital">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">10 — Layer 4</div>
+    <h2>People & Leadership: Skill Drives Stability</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <h3>Technician Competency Framework</h3>
+        <p style="font-size:14px; margin-bottom:18px; color:rgba(255,255,255,0.7);">Every technician, engineer, and NOC operator is graded and developed through a structured 5-level model.</p>
+
+        <div class="level-row">
+          <div class="level-badge">L1</div>
+          <div>
+            <div style="font-weight:600; font-size:14px;">Basic Field Support</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.55);">Supervised tasks · Basic PM · Fault reporting</div>
+          </div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge" style="background:var(--blue-light);">L2</div>
+          <div>
+            <div style="font-weight:600; font-size:14px;">Independent Execution</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.55);">PM/CM execution · Access management · iTSM usage</div>
+          </div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge" style="background:var(--orange);">L3</div>
+          <div>
+            <div style="font-weight:600; font-size:14px;">Specialist (DG · RMS · Battery)</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.55);">Deep technical expertise · Complex fault resolution</div>
+          </div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge" style="background:#E87722;">L4</div>
+          <div>
+            <div style="font-weight:600; font-size:14px;">Regional Expert</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.55);">Multi-site oversight · Knowledge transfer · SOP design</div>
+          </div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge" style="background:#C0392B;">L5</div>
+          <div>
+            <div style="font-weight:600; font-size:14px;">Trainer + Auditor</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.55);">Training delivery · Quality audit · Process improvement</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Leadership Models</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+          <div class="card card-orange" style="padding:14px;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Herzberg Two-Factor Theory</div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.7);">Reduce hygiene issues (pay, safety, work conditions) first. Then amplify motivators (recognition, growth, responsibility).</div>
+          </div>
+          <div class="card card-blue" style="padding:14px;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:4px;">McGregor X/Y Model</div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.7);">Empower field teams with accountability — not policing. Assume competence and build ownership.</div>
+          </div>
+          <div class="card" style="padding:14px; border-left:4px solid var(--grey-light);">
+            <div style="font-weight:700; font-size:14px; margin-bottom:4px;">Situational Leadership</div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.7);">Match the direction level to the competence of the individual. One size does not fit all field conditions.</div>
+          </div>
+        </div>
+
+        <h3>Subcontractor Management (Mali)</h3>
+        <p style="font-size:14px; margin-bottom:14px; color:rgba(255,255,255,0.7);">Four subcontractors → four styles → four outcomes. ZPOS standardizes through shared accountability.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:130px; padding:12px; background:rgba(255,255,255,0.05); border-radius:8px; text-align:center;">
+            <div style="font-size:20px;">📋</div>
+            <div style="font-size:13px; font-weight:600; margin-top:4px;">Monthly Scorecards</div>
+          </div>
+          <div style="flex:1; min-width:130px; padding:12px; background:rgba(255,255,255,0.05); border-radius:8px; text-align:center;">
+            <div style="font-size:20px;">🤝</div>
+            <div style="font-size:13px; font-weight:600; margin-top:4px;">Joint Performance Forums</div>
+          </div>
+          <div style="flex:1; min-width:130px; padding:12px; background:rgba(255,255,255,0.05); border-radius:8px; text-align:center;">
+            <div style="font-size:20px;">🔁</div>
+            <div style="font-size:13px; font-weight:600; margin-top:4px;">Retraining Loops</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 12: MTTR & PM EXCELLENCE
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-people">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">11 — Operational Excellence</div>
+    <h2>MTTR & PM Excellence Models</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div>
+        <h3>MTTR: Speed With Structure</h3>
+        <p style="font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">MTTR is the clearest reflection of operational maturity. Failures in any one dimension lead to a breach.</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;">
+          <div style="padding:14px; background:rgba(46,134,193,0.12); border:1px solid rgba(46,134,193,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:22px; margin-bottom:4px;">🚗</div>
+            <div style="font-weight:700; font-size:13px;">Travel Time</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:3px;">Geofencing · NTA · Night standby</div>
+          </div>
+          <div style="padding:14px; background:rgba(46,134,193,0.12); border:1px solid rgba(46,134,193,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:22px; margin-bottom:4px;">🔑</div>
+            <div style="font-weight:700; font-size:13px;">Access</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:3px;">Pre-coordination · Security flows</div>
+          </div>
+          <div style="padding:14px; background:rgba(232,119,34,0.12); border:1px solid rgba(232,119,34,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:22px; margin-bottom:4px;">📦</div>
+            <div style="font-weight:700; font-size:13px;">Spare Readiness</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:3px;">Regional buffer stocks</div>
+          </div>
+          <div style="padding:14px; background:rgba(232,119,34,0.12); border:1px solid rgba(232,119,34,0.25); border-radius:8px; text-align:center;">
+            <div style="font-size:22px; margin-bottom:4px;">📞</div>
+            <div style="font-weight:700; font-size:13px;">NOC Coordination</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:3px;">Fault classification accuracy</div>
+          </div>
+        </div>
+
+        <div style="padding:14px 18px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+          <h4 style="font-size:12px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Nearest Technician Allocation (NTA)</h4>
+          <p style="font-size:13px; color:rgba(255,255,255,0.75);">Pakistan, Nigeria, DRC often face 60–90 min travel for rural clusters. ZPOS introduces regional geofencing and a night-shift standby matrix to cut response time structurally.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3>PM Quality → Penalty Chain</h3>
+        <p style="font-size:14px; margin-bottom:16px; color:rgba(255,255,255,0.7);">Mali ESCO example: poor PM on cooling fans triggers a cascading penalty chain worth far more than the PM cost itself.</p>
+
+        <div style="display:flex; flex-direction:column; gap:3px; margin-bottom:20px;">
+          <div style="padding:10px 16px; background:var(--blue); border-radius:6px; font-size:13px; font-weight:600;">🔧 Poor PM — Cooling fans not checked</div>
+          <div style="text-align:center; color:var(--orange); font-size:16px;">↓</div>
+          <div style="padding:10px 16px; background:rgba(232,119,34,0.2); border:1px solid rgba(232,119,34,0.3); border-radius:6px; font-size:13px; font-weight:600;">🌡️ Inverter overheating → Derating</div>
+          <div style="text-align:center; color:var(--orange); font-size:16px;">↓</div>
+          <div style="padding:10px 16px; background:rgba(232,119,34,0.3); border-radius:6px; font-size:13px; font-weight:600;">🔋 Battery early discharge</div>
+          <div style="text-align:center; color:var(--orange); font-size:16px;">↓</div>
+          <div style="padding:10px 16px; background:rgba(231,76,60,0.2); border:1px solid rgba(231,76,60,0.3); border-radius:6px; font-size:13px; font-weight:600;">📡 NUR penalty triggered</div>
+          <div style="text-align:center; color:#E74C3C; font-size:16px;">↓</div>
+          <div style="padding:10px 16px; background:rgba(231,76,60,0.3); border-radius:6px; font-size:13px; font-weight:600;">💸 Capex life degradation — $$$ loss</div>
+        </div>
+
+        <div style="padding:14px 18px; background:rgba(232,119,34,0.1); border-left:3px solid var(--orange); border-radius:0 8px 8px 0;">
+          <div style="font-size:13px; font-weight:700; color:var(--orange-bright); margin-bottom:4px;">PM ROI Principle</div>
+          <div style="font-size:14px; color:rgba(255,255,255,0.8);">One weak PM can expose the operation to <strong style="color:white;">up to 7 compounding penalties</strong> in a single site failure event.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 13: ENERGY, FUEL & BATTERY
+     ============================================================ -->
+<section class="slide bg-navy" id="slide-mttr">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">12 — Energy Governance</div>
+    <h2>Fuel, Battery & Renewable Energy</h2>
+    <div class="accent-line"></div>
+
+    <div class="grid-3" style="gap:24px; align-items:start;">
+      <div>
+        <h3>Fuel Management</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:16px;">Fuel is the biggest OPEX driver in diesel-heavy markets like DRC, Mali, and Nigeria.</p>
+
+        <div style="margin-bottom:16px;">
+          <h4 style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.5); margin-bottom:8px;">Common Penalty Sources</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:5px;">
+            <li style="padding:7px 12px; background:rgba(255,255,255,0.05); border-radius:5px; font-size:13px;">⛽ Fuel theft & adulteration</li>
+            <li style="padding:7px 12px; background:rgba(255,255,255,0.05); border-radius:5px; font-size:13px;">📊 Miscalculated consumption estimates</li>
+            <li style="padding:7px 12px; background:rgba(255,255,255,0.05); border-radius:5px; font-size:13px;">🔧 DG wear and calibration drift</li>
+            <li style="padding:7px 12px; background:rgba(255,255,255,0.05); border-radius:5px; font-size:13px;">📝 Log manipulation</li>
+          </ul>
+        </div>
+
+        <div style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.25); border-radius:8px; padding:14px;">
+          <h4 style="font-size:12px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Theft Anomaly Example</h4>
+          <div style="font-family:'Barlow Condensed'; font-size:14px; line-height:2;">
+            <div>Expected: <span style="color:var(--blue-light); font-weight:700;">3.2 L/hr</span></div>
+            <div>Observed: <span style="color:#E74C3C; font-weight:700;">4.8 L/hr</span></div>
+            <div>Risk: <span style="color:#E74C3C; font-weight:700; font-size:16px;">HIGH — Silent Theft</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Battery Governance</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:16px;">Battery autonomy breaches are especially common in ESCO projects and link directly to NUR penalties.</p>
+
+        <h4 style="font-size:12px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">Battery State of Health (SoH) Index</h4>
+
+        <div class="soh-bar">
+          <div class="soh-label"><span>Healthy (Normal Ops)</span><span style="color:#2ECC71;">> 90%</span></div>
+          <div class="soh-track"><div class="soh-fill" style="width:90%; background:#2ECC71;">Healthy</div></div>
+        </div>
+        <div class="soh-bar">
+          <div class="soh-label"><span>Monitor (Increased Checks)</span><span style="color:var(--orange-bright);">80–90%</span></div>
+          <div class="soh-track"><div class="soh-fill" style="width:80%; background:var(--orange-bright);">Monitor</div></div>
+        </div>
+        <div class="soh-bar">
+          <div class="soh-label"><span>High Risk (Action Required)</span><span style="color:var(--orange);">65–80%</span></div>
+          <div class="soh-track"><div class="soh-fill" style="width:65%; background:var(--orange);">High Risk</div></div>
+        </div>
+        <div class="soh-bar">
+          <div class="soh-label"><span>Replace (Immediate Action)</span><span style="color:#E74C3C;">< 65%</span></div>
+          <div class="soh-track"><div class="soh-fill" style="width:40%; background:#E74C3C;">Replace</div></div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <h4 style="font-size:12px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Failure Causes</h4>
+          <div style="font-size:12px; color:rgba(255,255,255,0.65); line-height:2;">
+            Incorrect load estimation · Aged batteries · Unhealthy charging cycles · Poor cooling · RMS blind spots · I&C compromises
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Renewable Energy Ratio</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:16px;">Solar & hybrid systems require precise configuration. A mismatch in any component results in RE Ratio penalties.</p>
+
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+          <li style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:7px;">
+            <span style="font-size:18px;">☀️</span>
+            <div>
+              <div style="font-size:13px; font-weight:600;">Correct solar sizing</div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.5);">On load side AND on charging side</div>
+            </div>
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:7px;">
+            <span style="font-size:18px;">⚡</span>
+            <div>
+              <div style="font-size:13px; font-weight:600;">Proper inverter settings</div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.5);">Configuration compliance critical</div>
+            </div>
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:7px;">
+            <span style="font-size:18px;">🧹</span>
+            <div>
+              <div style="font-size:13px; font-weight:600;">Panel surface cleanliness</div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.5);">Critical in dusty regions (Sahel, DRC)</div>
+            </div>
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(255,255,255,0.05); border-radius:7px;">
+            <span style="font-size:18px;">🌡️</span>
+            <div>
+              <div style="font-size:13px; font-weight:600;">Battery temperature control</div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.5);">Ambient temp affects SoH and charging</div>
+            </div>
+          </li>
+        </ul>
+
+        <div style="padding:12px; background:rgba(232,119,34,0.1); border-radius:8px; text-align:center; border:1px solid rgba(232,119,34,0.2);">
+          <div style="font-family:'Barlow Condensed'; font-size:32px; font-weight:800; color:var(--orange);">Predictive</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.65);">Load forecasting required for RE ratio control</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 14: 90-DAY ROADMAP
+     ============================================================ -->
+<section class="slide bg-mid" id="slide-pm">
+  <div class="slide-inner fade-in">
+    <div class="slide-num">13 — Transformation</div>
+    <h2>90-Day Country Transformation Roadmap</h2>
+    <div class="accent-line"></div>
+    <p style="max-width:700px; margin-bottom:30px; color:rgba(255,255,255,0.7);">
+      Any country — regardless of complexity — can achieve penalty stability in 90 days using this structured phased approach.
+    </p>
+
+    <div class="grid-3" style="gap:20px; align-items:start;">
+      <!-- PHASE 1 -->
+      <div class="phase-card" style="border:1px solid rgba(46,134,193,0.3);">
+        <div class="phase-header" style="background:var(--blue);">
+          <div style="font-size:11px; opacity:0.7; text-transform:uppercase; letter-spacing:2px; margin-bottom:3px;">Phase 1 · Days 1–20</div>
+          <div style="font-size:24px; font-weight:800;">🔍 DIAGNOSE</div>
+        </div>
+        <div class="phase-body">
+          <ul class="tick-list">
+            <li>Penalty Pareto — Top 3 penalties cause 70% of exposure</li>
+            <li>Full process walk-through (PM, CM, RMS, Access, Spares)</li>
+            <li>Skill audit across all teams</li>
+            <li>Region variance analysis</li>
+            <li>Identify MCP (Most Critical Penalty per country)</li>
+          </ul>
+          <div style="margin-top:16px;">
+            <h4 style="font-size:11px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Tools</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:5px;">
+              <span style="padding:3px 10px; background:rgba(46,134,193,0.2); border-radius:12px; font-size:11px; color:var(--blue-light);">SIPOC</span>
+              <span style="padding:3px 10px; background:rgba(46,134,193,0.2); border-radius:12px; font-size:11px; color:var(--blue-light);">Control Charts</span>
+              <span style="padding:3px 10px; background:rgba(46,134,193,0.2); border-radius:12px; font-size:11px; color:var(--blue-light);">Fishbone</span>
+              <span style="padding:3px 10px; background:rgba(46,134,193,0.2); border-radius:12px; font-size:11px; color:var(--blue-light);">Value Stream Map</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="phase-card" style="border:1px solid rgba(232,119,34,0.4);">
+        <div class="phase-header" style="background:var(--orange);">
+          <div style="font-size:11px; opacity:0.8; text-transform:uppercase; letter-spacing:2px; margin-bottom:3px;">Phase 2 · Days 21–60</div>
+          <div style="font-size:24px; font-weight:800;">⚡ STABILIZE</div>
+        </div>
+        <div class="phase-body">
+          <ul class="tick-list">
+            <li>RMS/Alarms visibility recovery to target</li>
+            <li>PM uplift program — quality + adherence</li>
+            <li>MTTR governance rollout</li>
+            <li>Daily NOC × O&M sync established</li>
+            <li>Quick wins on battery/autonomy issues</li>
+            <li>Subcontractor alignment — shared scorecards (Mali)</li>
+            <li>Remove clogging: Resources · Tools · Processes · Logistics</li>
+            <li>Evaluate → Fix → Repeat cycle</li>
+          </ul>
+          <div style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.06); border-radius:6px; font-size:12px; color:rgba(255,255,255,0.65);">
+            🎯 Target: Halt penalty bleeding — stabilize all KPIs above red zone
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="phase-card" style="border:1px solid rgba(44,62,80,0.8);">
+        <div class="phase-header" style="background:var(--grey-dark);">
+          <div style="font-size:11px; opacity:0.7; text-transform:uppercase; letter-spacing:2px; margin-bottom:3px;">Phase 3 · Days 61–90</div>
+          <div style="font-size:24px; font-weight:800;">🚀 SCALE & CONTROL</div>
+        </div>
+        <div class="phase-body">
+          <ul class="tick-list">
+            <li>Leading indicators dashboard (MTTR view, RMS uptime, RER)</li>
+            <li>Predictive maintenance program active</li>
+            <li>KPI-based staff evaluation and incentive alignment</li>
+            <li>Monthly penalty heatmaps for all OPCOs</li>
+            <li>Quarterly maturity audits</li>
+            <li>Control plan rollout across regions</li>
+          </ul>
+          <div style="margin-top:14px; padding:10px; background:rgba(232,119,34,0.1); border-radius:6px; text-align:center;">
+            <div style="font-family:'Barlow Condensed'; font-size:20px; font-weight:800; color:var(--orange);">Train · Evaluate · Improve</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); margin-top:3px;">Continuous loop — not a one-time event</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE BAR -->
+    <div style="margin-top:30px; position:relative; height:60px;">
+      <div style="position:absolute; top:28px; left:0; right:0; height:4px; background:rgba(255,255,255,0.1); border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:0; width:22%; height:4px; background:var(--blue-light); border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:22%; width:44%; height:4px; background:var(--orange); border-radius:2px;"></div>
+      <div style="position:absolute; top:28px; left:66%; right:0; height:4px; background:var(--grey-mid); border-radius:2px;"></div>
+
+      <div style="position:absolute; top:0; left:0; font-size:11px; color:var(--blue-light); font-weight:700;">Day 1</div>
+      <div style="position:absolute; top:0; left:20%; font-size:11px; color:rgba(255,255,255,0.5);">Day 20</div>
+      <div style="position:absolute; top:0; left:64%; font-size:11px; color:rgba(255,255,255,0.5);">Day 60</div>
+      <div style="position:absolute; top:0; right:0; font-size:11px; color:var(--grey-light); font-weight:700;">Day 90</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 15: CLOSING
+     ============================================================ -->
+<section class="slide" id="slide-energy" style="background: linear-gradient(135deg, #060F18 0%, #0B1C2E 60%, #0D2137 100%);">
+  <div class="cover-bg-circle1"></div>
+  <div class="cover-bg-circle3"></div>
+  <div class="slide-inner fade-in" style="text-align:center;">
+    <div style="margin-bottom:20px;">
+      <span class="pill pill-orange">Zero Penalty Framework</span>
+    </div>
+    <h1 style="font-size: clamp(32px,5vw,60px); max-width:720px; margin:0 auto 20px; line-height:1.1;">
+      This Is Not a Collection of Tips.<br>
+      <span style="color:var(--orange);">It Is a Coherent<br>Operational Philosophy.</span>
+    </h1>
+    <div style="width:80px; height:4px; background:var(--orange); border-radius:2px; margin:24px auto;"></div>
+
+    <div style="display:flex; justify-content:center; gap:28px; flex-wrap:wrap; margin:30px 0;">
+      <div class="stat-box" style="min-width:140px;">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Countries Covered</div>
+      </div>
+      <div class="stat-box" style="min-width:140px;">
+        <div class="stat-num">4</div>
+        <div class="stat-label">ZPOS Layers</div>
+      </div>
+      <div class="stat-box" style="min-width:140px;">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Roadmap Phases</div>
+      </div>
+      <div class="stat-box" style="min-width:140px;">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Target Penalties</div>
+      </div>
+    </div>
+
+    <p style="max-width:600px; margin:0 auto 30px; color:rgba(255,255,255,0.6); font-size:16px; line-height:1.7;">
+      The ZPF gives every O&M professional a unified language, a structured operating model, and a clear roadmap to eliminate penalties — not by working harder, but by operating smarter.
+    </p>
+
+    <div class="author-tag" style="display:inline-flex; margin-bottom:30px;">
+      <div class="author-avatar">ZA</div>
+      <div style="text-align:left;">
+        <div class="author-name">Zain Ul Aabedeen (Zak)</div>
+        <div class="author-role">Group Head of Operations · iEng Group · Africa & Asia</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <span class="pill pill-blue">Pakistan</span>
+      <span class="pill pill-blue">Philippines</span>
+      <span class="pill pill-blue">Myanmar</span>
+      <span class="pill pill-blue">Nigeria</span>
+      <span class="pill pill-orange">DR Congo</span>
+      <span class="pill pill-orange">Mali</span>
+      <span class="pill pill-grey">Uganda</span>
+      <span class="pill pill-grey">Afghanistan</span>
+    </div>
+  </div>
+</section>
+
+<!-- HIDDEN EXTRA ANCHORS for nav dots -->
+<div id="slide-roadmap" style="height:0; overflow:hidden;"></div>
+<div id="slide-closing" style="height:0; overflow:hidden;"></div>
+
+<script>
+  // Intersection observer for fade-in animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Highlight active nav dot
+  const sections = document.querySelectorAll('.slide[id]');
+  const dots = document.querySelectorAll('.nav-dots a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        dots.forEach(dot => {
+          dot.style.background = dot.getAttribute('href') === '#' + id
+            ? 'var(--orange)'
+            : 'rgba(255,255,255,0.25)';
+          dot.style.transform = dot.getAttribute('href') === '#' + id
+            ? 'scale(1.4)'
+            : 'scale(1)';
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>

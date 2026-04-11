@@ -111,7 +111,21 @@ export default function ZainPersonalBrand() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <div className={cardStyle}>
-              <h3 className="text-orange-400 font-semibold">Zero Penalty Framework</h3>
+             <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 hover:border-orange-400 transition">
+  <h3 className="text-xl font-semibold text-orange-400 mb-2">
+    Zero Penalty Framework
+  </h3>
+  <p className="text-gray-300 mb-4">
+    A structured operating model integrating governance, process discipline, and digital visibility to eliminate SLA penalties across telecom infrastructure portfolios.
+  </p>
+  <a
+    href="/zero-penalty-framework.html"
+    target="_blank"
+    className="text-blue-400 hover:text-orange-400 transition"
+  >
+    Explore Zero Penalty Operating System →
+  </a>
+</div>
               <p className="text-gray-400 text-sm mt-3">
                 Eliminates SLA penalties through structured governance and RCA discipline.
               </p>
