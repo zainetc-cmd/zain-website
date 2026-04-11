@@ -1,15 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Mail,
-  Linkedin,
-  Download,
-  Globe,
-  MessageCircle,
-  Briefcase,
-  BarChart3,
-} from "lucide-react";
+import { Mail, Linkedin, Download, MessageCircle } from "lucide-react";
 
 export default function ZainPersonalBrand() {
   const buttonPrimary =
@@ -18,7 +10,7 @@ export default function ZainPersonalBrand() {
   const buttonOutline =
     "inline-flex items-center gap-2 rounded-2xl border border-gray-400 px-6 py-3 text-gray-100 hover:border-orange-400 hover:text-orange-300 transition";
 
-  const cardStyle =
+  const card =
     "rounded-2xl bg-slate-800 border border-white/10 p-6 hover:border-orange-400 transition";
 
   return (
@@ -29,7 +21,7 @@ export default function ZainPersonalBrand() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <span className="font-semibold">Zain ul Aabedeen</span>
           <div className="flex gap-6 text-sm text-gray-300">
-            <a href="#execution-systems">Systems</a>
+            <a href="#publications">Publications</a>
             <a href="#opportunities">Opportunities</a>
             <a href="#credentials">Credentials</a>
             <a href="#contact">Contact</a>
@@ -39,7 +31,6 @@ export default function ZainPersonalBrand() {
 
       {/* HERO */}
       <section className="relative pt-40 pb-32 px-6 overflow-hidden">
-
         <div
           className="absolute inset-0 bg-cover bg-center blur-xl scale-110"
           style={{ backgroundImage: "url('/bg-telecom-solar.jpg')" }}
@@ -99,67 +90,59 @@ export default function ZainPersonalBrand() {
         </div>
       </section>
 
-      {/* My Publications */}
-      <section id="execution-systems" className="py-24 px-6 bg-slate-900 border-t border-white/10">
+      {/* PUBLICATIONS */}
+      <section id="publications" className="py-24 px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto text-center">
 
-          <h2 className="text-3xl font-semibold mb-6">My Publications</h2>
-<p className="text-gray-500 text-sm text-center max-w-3xl mx-auto mb-8">
-  The following publications represent original frameworks and operating models developed from field experience across multi-country infrastructure environments.  
-  All materials are the intellectual property of Zain ul Aabedeen and are shared for professional reference only.
-</p>
-          <p className="text-gray-400 mb-12">
-            Field-tested frameworks to eliminate execution gaps and protect infrastructure performance.
+          <h2 className="text-3xl font-semibold mb-6">Publications</h2>
+
+          <p className="text-gray-500 text-sm max-w-3xl mx-auto mb-10">
+            Original frameworks and operating models developed across multi-country infrastructure environments.
+            All materials are the intellectual property of Zain ul Aabedeen.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className={cardStyle}>
-             <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 hover:border-orange-400 transition">
-  <h3 className="text-xl font-semibold text-orange-400 mb-2">
-    Zero Penalty Framework
-  </h3>
-  <p className="text-gray-300 mb-4">
-    A structured operating model integrating governance, process discipline, and digital visibility to eliminate SLA penalties across telecom infrastructure portfolios.
-  </p>
-  <a
-    href="/zero-penalty-framework.html"
-    target="_blank"
-    className="text-blue-400 hover:text-orange-400 transition"
-  >
-    Explore Zero Penalty Operating System →
-  </a>
-</div>
-              <p className="text-gray-400 text-sm mt-3">
-                Eliminates SLA penalties through structured governance and RCA discipline.
+
+            <div className={card}>
+              <h3 className="text-orange-400 font-semibold mb-2">
+                Zero Penalty Framework
+              </h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Multi-layer operating system eliminating SLA penalties through governance, process discipline, and execution rigor.
+              </p>
+              <a
+                href="/zero-penalty-framework.html"
+                target="_blank"
+                className="text-blue-400 hover:text-orange-400"
+              >
+                Explore Framework →
+              </a>
+            </div>
+
+            <div className={card}>
+              <h3 className="text-orange-400 font-semibold mb-2">
+                RCA Interrogation Model
+              </h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Structured 11-scenario questioning system to eliminate superficial RCAs and enforce root cause accuracy.
+              </p>
+              <button
+                className="text-orange-300 hover:text-orange-400 underline"
+                onClick={() => window.open("/NOC_RCA_Handbook.html", "_blank")}
+              >
+                Explore Model →
+              </button>
+            </div>
+
+            <div className={card}>
+              <h3 className="text-orange-400 font-semibold mb-2">
+                O&M Playbook
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Governance and execution alignment model across telecom infrastructure portfolios.
               </p>
             </div>
 
-            <div className={cardStyle}>
-              <div className={cardStyle}>
-  <h3 className="text-orange-400 font-semibold">NOC RCA System</h3>
-
-  <p className="text-gray-400 text-sm mt-3">
-    Structured 11-scenario interrogation model enabling NOC teams to isolate true root causes and eliminate recurring failures.
-  </p>
-
-  <button
-    className="mt-4 text-sm text-orange-300 hover:text-orange-400 underline"
-    onClick={() => window.open("/NOC_RCA_Handbook.html", "_blank")}
-  >
-    View RCA Handbook →
-  </button>
-</div>
-              <p className="text-gray-400 text-sm mt-3">
-                11-scenario questioning model for accurate root cause identification.
-              </p>
-            </div>
-
-            <div className={cardStyle}>
-              <h3 className="text-orange-400 font-semibold">O&M Playbook</h3>
-              <p className="text-gray-400 text-sm mt-3">
-                Aligns strategy, governance, and field execution across portfolios.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -171,16 +154,16 @@ export default function ZainPersonalBrand() {
           <h2 className="text-3xl font-semibold mb-6">Opportunities Desk</h2>
 
           <p className="text-gray-400 mb-10">
-            Curated infrastructure roles across Africa & emerging markets.
+            Curated infrastructure leadership roles across emerging markets.
           </p>
 
           <div className="space-y-6">
-            <div className={cardStyle}>
+            <div className={card}>
               <h3 className="text-orange-400">Senior O&M Manager – Africa</h3>
               <p className="text-gray-400 text-sm">TowerCo | Multi-country</p>
             </div>
 
-            <div className={cardStyle}>
+            <div className={card}>
               <h3 className="text-orange-400">Energy Lead – Middle East</h3>
               <p className="text-gray-400 text-sm">ESCO Platform</p>
             </div>
@@ -189,24 +172,29 @@ export default function ZainPersonalBrand() {
       </section>
 
       {/* CREDENTIALS */}
-      <section id="credentials" className="py-24 px-6 bg-slate-900 border-t border-white/10 text-center">
-        <h2 className="text-3xl font-semibold mb-6">Credentials</h2>
+      <section id="credentials" className="py-24 px-6 border-t border-white/10 text-center">
+        <h2 className="text-3xl font-semibold mb-10">Credentials</h2>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <div className={cardStyle}>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+          <div className={card}>
+            <img src="/pmp-cert.pdf" className="mb-4 rounded-lg" />
             <h3 className="text-orange-400">PMP®</h3>
-            <p className="text-gray-400 text-sm">Project Management Institute</p>
+            <p className="text-gray-400 text-sm">Valid till 2027</p>
           </div>
 
-          <div className={cardStyle}>
-            <h3 className="text-orange-400">Lean Six Sigma</h3>
-            <p className="text-gray-400 text-sm">Process Excellence</p>
+          <div className={card}>
+            <img src="/sixsigma.jpg" className="mb-4 rounded-lg" />
+            <h3 className="text-orange-400">Lean Six Sigma Green Belt</h3>
+            <p className="text-gray-400 text-sm">Benchmark Six Sigma</p>
           </div>
 
-          <div className={cardStyle}>
-            <h3 className="text-orange-400">Telecom & Energy</h3>
-            <p className="text-gray-400 text-sm">Infrastructure Systems</p>
+          <div className={card}>
+            <img src="/negotiation-cert.pdf" className="mb-4 rounded-lg" />
+            <h3 className="text-orange-400">Negotiation Masterclass</h3>
+            <p className="text-gray-400 text-sm">ADN Group | 2026</p>
           </div>
+
         </div>
       </section>
 
@@ -233,7 +221,7 @@ export default function ZainPersonalBrand() {
       </button>
 
       <footer className="py-8 text-center text-gray-400 border-t border-white/10">
-        © {new Date().getFullYear()} Zain ul Aabedeen
+        © {new Date().getFullYear()} Zain ul Aabedeen. All rights reserved.
       </footer>
     </div>
   );
