@@ -119,6 +119,24 @@ export default function ZainPersonalBrand() {
               </a>
             </div>
 
+<div className={card}>
+  <h3 className="text-orange-400 font-semibold mb-2">
+    Zero Penalty Framework 2.0
+  </h3>
+
+  <p className="text-gray-400 text-sm mb-4">
+    AI-enabled evolution of the Zero Penalty Operating System integrating predictive controls, NOC intelligence, governance discipline, and execution assurance across telecom infrastructure operations.
+  </p>
+
+  <a
+    href="/zero-penalty-framework-2.html"
+    target="_blank"
+    className="text-blue-400 hover:text-orange-400"
+  >
+    Explore Framework 2.0 →
+  </a>
+</div>
+
             <div className={card}>
               <h3 className="text-orange-400 font-semibold mb-2">
                 RCA Interrogation Model

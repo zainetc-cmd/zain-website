@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Penalty Framework — AI-Enabled Edition | Zak — iEng Group</title>
+<style>
+  :root {
+    --dark:    #0D1B2A;
+    --navy:    #1B2A4A;
+    --mid:     #1E3A5F;
+    --card:    #162032;
+    --cardlt:  #1E3050;
+    --teal:    #0891B2;
+    --teallt:  #06B6D4;
+    --mint:    #10B981;
+    --amber:   #F59E0B;
+    --red:     #EF4444;
+    --white:   #FFFFFF;
+    --offwhite:#E2E8F0;
+    --muted:   #94A3B8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    background: var(--dark);
+    color: var(--offwhite);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,27,42,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(8,145,178,0.2);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 2rem;
+    height: 52px; overflow-x: auto;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.05em; white-space: nowrap;
+    padding: 4px 0; border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover { color: var(--teal); border-color: var(--teal); }
+  nav .brand { color: var(--white); font-weight: 700; font-size: 0.8rem; letter-spacing: .08em; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--dark) 0%, #0A1628 60%, #0D2040 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 4rem 2rem;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(8,145,178,0.08), transparent);
+    pointer-events:none;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+    color: var(--teal); margin-bottom: .75rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800; line-height: 1.15;
+    color: var(--white); margin-bottom: .5rem;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(8,145,178,0.15);
+    border: 1px solid rgba(8,145,178,0.4);
+    color: var(--amber); font-size: 0.75rem; font-weight: 700;
+    letter-spacing: .1em; padding: 4px 12px; border-radius: 4px;
+    margin-bottom: 1.2rem;
+  }
+  .hero-desc { color: var(--muted); font-size: 1rem; max-width: 440px; margin-bottom: 2rem; }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  }
+  .stat-box {
+    background: var(--card);
+    border-radius: 10px; padding: 1rem 0.5rem;
+    text-align: center; border: 1px solid rgba(8,145,178,0.12);
+  }
+  .stat-num { font-size: 2rem; font-weight: 800; color: var(--teal); }
+  .stat-lbl { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+  .hero-right {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .ai-pill {
+    background: var(--card);
+    border-radius: 12px; padding: 1.1rem 1.4rem;
+    border-left: 3px solid var(--teal);
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .ai-pill .icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .ai-pill strong { color: var(--white); display: block; font-size: 0.9rem; }
+  .ai-pill span { color: var(--muted); font-size: 0.82rem; }
+
+  /* SECTION */
+  section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: .15em;
+    color: var(--teal); margin-bottom: .5rem;
+  }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: var(--white); margin-bottom: .5rem; }
+  .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 700px; }
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0; }
+
+  /* AI CARDS */
+  .ai-card {
+    background: var(--card);
+    border-radius: 14px; padding: 1.5rem;
+    border-left: 4px solid var(--teal);
+    position: relative; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    display: flex; flex-direction: column; gap: .9rem;
+  }
+  .ai-card .platform-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(8,145,178,0.15); border: 1px solid rgba(8,145,178,0.3);
+    color: var(--teallt); font-size: 0.7rem; font-weight: 700;
+    letter-spacing: .05em; padding: 3px 10px; border-radius: 4px;
+    width: fit-content;
+  }
+  .ai-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--white); }
+  .ai-card .prompt-block {
+    background: rgba(245,158,11,0.06);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 6px 6px 0; padding: .7rem 1rem;
+  }
+  .ai-card .prompt-label { font-size: 0.65rem; font-weight: 700; letter-spacing: .1em; color: var(--amber); margin-bottom: .3rem; }
+  .ai-card .prompt-text { font-size: 0.82rem; color: var(--offwhite); font-style: italic; }
+  .ai-card .output-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .output-chip {
+    background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25);
+    color: var(--mint); font-size: 0.72rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .action-text { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+  .action-text strong { color: var(--offwhite); font-style: normal; }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+  @media(max-width:900px) {
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media(max-width:540px) {
+    .grid-4 { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* LAYER CARDS */
+  .layer-card {
+    background: var(--cardlt); border-radius: 14px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .layer-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 800; color: var(--white); flex-shrink: 0;
+  }
+  .layer-head { display: flex; align-items: center; gap: .8rem; }
+  .layer-name { font-size: 0.65rem; font-weight: 700; letter-spacing: .12em; }
+  .layer-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-top: 2px; }
+
+  /* DMAIC */
+  .dmaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+  @media(max-width:900px) { .dmaic-grid { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:480px) { .dmaic-grid { grid-template-columns: 1fr; } }
+  .dmaic-card {
+    background: var(--card); border-radius: 14px; padding: 1.4rem 1.1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.35); display: flex; flex-direction: column; gap: .8rem;
+  }
+  .dmaic-letter {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; font-weight: 800; color: var(--white); margin: 0 auto .3rem;
+  }
+  .dmaic-name { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: .1em; }
+  .dmaic-platform { text-align: center; font-size: 0.68rem; color: var(--muted); }
+  .dmaic-section-label { font-size: 0.62rem; font-weight: 700; letter-spacing: .08em; }
+  .dmaic-text { font-size: 0.78rem; color: var(--offwhite); }
+
+  /* ROADMAP */
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media(max-width:768px) { .roadmap-grid { grid-template-columns: 1fr; } }
+  .roadmap-card {
+    background: var(--card); border-radius: 14px; padding: 1.8rem 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,.35); display: flex; flex-direction: column; gap: 1.1rem;
+  }
+  .phase-header { display: flex; align-items: center; gap: 1rem; }
+  .phase-num {
+    width: 48px; height: 48px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 800; color: var(--white); flex-shrink: 0;
+  }
+  .phase-name { font-size: 1rem; font-weight: 700; color: var(--white); }
+  .phase-days { font-size: 0.75rem; color: var(--muted); }
+  .phase-tasks { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+  .phase-tasks li { font-size: 0.82rem; color: var(--offwhite); padding-left: 1.1rem; position: relative; }
+  .phase-tasks li::before { content: '▸'; position: absolute; left: 0; color: var(--muted); }
+  .phase-tasks li.highlight { color: var(--mint); font-weight: 600; }
+  .phase-tasks li.highlight::before { color: var(--mint); }
+  .phase-prompt {
+    background: rgba(245,158,11,0.07);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 6px 6px 0; padding: .8rem 1rem;
+    font-size: 0.78rem; color: var(--offwhite); font-style: italic;
+  }
+  .phase-prompt-label { font-size: 0.62rem; font-weight: 700; letter-spacing: .1em; color: var(--amber); margin-bottom: .3rem; }
+
+  /* PLATFORMS BAR */
+  .platforms-bar {
+    background: var(--navy); border-radius: 12px; padding: 1.2rem 1.8rem;
+    display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center;
+  }
+  .platforms-bar .label { font-size: 0.68rem; font-weight: 700; letter-spacing: .1em; color: var(--teal); flex-shrink:0; }
+  .platform-item { font-size: 0.8rem; color: var(--offwhite); }
+  .platform-item::before { content: '▸ '; color: var(--teal); }
+
+  /* CLOSING */
+  .closing {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--dark) 100%);
+    text-align: center; padding: 5rem 2rem;
+  }
+  .closing h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: .5rem; }
+  .closing .tagline { font-size: 1.3rem; color: var(--teal); font-weight: 600; margin-bottom: 2.5rem; }
+  .pillars-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; max-width: 900px; margin: 0 auto 2.5rem; }
+  .pillar {
+    background: var(--card); border-radius: 12px; padding: 1.1rem 1.6rem; min-width: 190px;
+    text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  }
+  .pillar strong { display: block; color: var(--teal); font-size: 0.95rem; margin-bottom: .3rem; }
+  .pillar span { color: var(--muted); font-size: 0.82rem; font-style: italic; }
+  .author-line { color: var(--muted); font-size: 0.82rem; }
+  .author-line a { color: var(--teal); text-decoration: none; }
+
+  /* CASCADE VISUAL */
+  .cascade { display: flex; flex-direction: column; gap: 0; max-width: 380px; }
+  .cascade-item {
+    padding: .6rem 1.2rem; text-align: center; font-size: 0.82rem; font-weight: 600;
+    border-radius: 8px; position: relative;
+  }
+  .cascade-item::after {
+    content: '↓'; position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
+    color: var(--teal); font-size: 1rem; line-height: 1;
+  }
+  .cascade-item:last-child::after { display: none; }
+  .cascade-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  @media(max-width:700px) { .cascade-wrap { grid-template-columns: 1fr; } }
+
+  /* HEATMAP TABLE */
+  .heatmap-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .heatmap-table th { background: var(--navy); color: var(--muted); font-size: 0.68rem; letter-spacing: .08em; text-transform: uppercase; padding: .6rem .9rem; text-align: left; }
+  .heatmap-table td { padding: .6rem .9rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .heatmap-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .badge-high { background: rgba(239,68,68,0.15); color: #F87171; border: 1px solid rgba(239,68,68,0.25); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
+  .badge-med  { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
+  .score-bar { display: flex; align-items: center; gap: .5rem; }
+  .bar-bg { width: 80px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; }
+  .bar-fill { height: 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="brand">ZPF · AI EDITION</span>
+  <a href="#philosophy">Philosophy</a>
+  <a href="#ecosystem">Ecosystem</a>
+  <a href="#dmaic">DMAIC</a>
+  <a href="#zpos">ZPOS</a>
+  <a href="#governance">Governance</a>
+  <a href="#process">Process</a>
+  <a href="#digital">Digital</a>
+  <a href="#people">People</a>
+  <a href="#energy">Energy</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label">O&amp;M REFERENCE GUIDE · AFRICA &amp; ASIA</div>
+      <div class="hero-badge">✦ AI-ENABLED EDITION</div>
+      <h1>ZERO PENALTY<br><span>FRAMEWORK</span></h1>
+      <p class="hero-desc">Every step of this framework is now paired with a specific AI platform, a ready-to-use prompt, and the exact output you should expect.</p>
+      <div class="hero-stats">
+        <div class="stat-box"><div class="stat-num">7</div><div class="stat-lbl">Countries</div></div>
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">ZPOS Layers</div></div>
+        <div class="stat-box"><div class="stat-num">90</div><div class="stat-lbl">Day Roadmap</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--mint)">0</div><div class="stat-lbl">Penalty Target</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="ai-pill">
+        <div class="icon">🧠</div>
+        <div><strong>AI as Your Analyst</strong><span>Run Penalty Pareto, MTTR trends, and root cause analysis in minutes — not days.</span></div>
+      </div>
+      <div class="ai-pill" style="border-color:var(--amber)">
+        <div class="icon">💡</div>
+        <div><strong>AI as Your Advisor</strong><span>Risk profiling, contingency plans, escalation recommendations — all AI-generated from your own data.</span></div>
+      </div>
+      <div class="ai-pill" style="border-color:var(--mint)">
+        <div class="icon">🤖</div>
+        <div><strong>AI as Your Automator</strong><span>Predict failures before alarms ring. Flag fuel anomalies before they become penalties.</span></div>
+      </div>
+      <div class="ai-pill" style="border-color:var(--teallt)">
+        <div class="icon">📊</div>
+        <div><strong>AI as Your Reporter</strong><span>Generate SLA reports, penalty summaries, and performance dashboards in seconds.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<div id="philosophy" style="background: var(--navy); padding: 3rem 0;">
+  <section>
+    <div class="section-label">00 — AI PHILOSOPHY</div>
+    <h2>How AI is Woven Into This Framework</h2>
+    <p class="section-sub">This is not a tech upgrade. This is an operational multiplier. AI is embedded into every layer — analysis, execution, reporting, prediction.</p>
+    <div class="platforms-bar">
+      <span class="label">KEY AI PLATFORMS:</span>
+      <span class="platform-item">ChatGPT / GPT-4o</span>
+      <span class="platform-item">Claude (Anthropic)</span>
+      <span class="platform-item">Gemini Advanced</span>
+      <span class="platform-item">Microsoft Copilot</span>
+      <span class="platform-item">Power BI + AI</span>
+      <span class="platform-item">Tableau + Einstein AI</span>
+      <span class="platform-item">Julius AI</span>
+      <span class="platform-item">Hugging Face</span>
+      <span class="platform-item">Excel Copilot</span>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- ECOSYSTEM -->
+<div id="ecosystem">
+  <section>
+    <div class="section-label">01 — PENALTY INTELLIGENCE</div>
+    <h2>The Penalty Ecosystem — Now AI-Diagnosed</h2>
+    <p class="section-sub">Instead of manually tracing root causes, let AI run the diagnostic in minutes.</p>
+
+    <div class="cascade-wrap" style="margin-bottom: 3rem;">
+      <div>
+        <p style="font-size:0.72rem; font-weight:700; letter-spacing:.1em; color:var(--muted); margin-bottom:1rem;">THE PENALTY CASCADE</p>
+        <div class="cascade">
+          <div class="cascade-item" style="background:rgba(239,68,68,0.15); color:#F87171;">CUSTOMER SLA / KPI BREACH</div>
+          <div style="height:20px;"></div>
+          <div class="cascade-item" style="background:rgba(245,158,11,0.12); color:var(--amber);">PENALTY CATEGORIES</div>
+          <div style="height:20px;"></div>
+          <div class="cascade-item" style="background:rgba(8,145,178,0.12); color:var(--teal);">OPERATIONAL PROCESS FAILURES</div>
+          <div style="height:20px;"></div>
+          <div class="cascade-item" style="background:rgba(148,163,184,0.08); color:var(--muted);">STRUCTURE + GOVERNANCE GAPS</div>
+          <div style="height:20px;"></div>
+          <div class="cascade-item" style="background:rgba(148,163,184,0.06); color:var(--muted);">SKILLS &amp; BEHAVIORAL VARIATION</div>
+          <div style="height:20px;"></div>
+          <div class="cascade-item" style="background:rgba(148,163,184,0.04); color:var(--muted);">MARKET REALITIES</div>
+        </div>
+        <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--muted); font-style:italic;">"Penalties are issued at the top. Root causes are generated at the bottom."</p>
+      </div>
+      <div>
+        <div class="ai-card">
+          <div class="platform-badge">🤖 ChatGPT-4o or Claude</div>
+          <h3>AI-Powered Penalty Diagnosis</h3>
+          <div style="font-size:0.82rem; color:var(--muted);"><strong style="color:var(--offwhite)">INPUT:</strong> Upload your last 6-month penalty register (CSV or table)</div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"Analyze this penalty data. Identify top 3 penalty types by frequency and financial exposure. For each, perform a root cause hypothesis using the DMAIC framework. Output: Pareto chart data, root cause tree, and top 5 action priorities."</div>
+          </div>
+          <div>
+            <div style="font-size:0.65rem; font-weight:700; letter-spacing:.08em; color:var(--mint); margin-bottom:.4rem;">OUTPUT</div>
+            <div class="output-row">
+              <span class="output-chip">Penalty Pareto</span>
+              <span class="output-chip">Root Cause Tree</span>
+              <span class="output-chip">Action Priority List</span>
+              <span class="output-chip">Risk Heatmap</span>
+            </div>
+          </div>
+          <div class="action-text"><strong>Act on it:</strong> Paste Pareto into your NOC dashboard. Share action list with O&amp;M Heads. Review in weekly sync.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--card); border-radius:14px; padding:1.5rem; margin-bottom:1rem;">
+      <p style="font-size:0.72rem; font-weight:700; letter-spacing:.1em; color:var(--muted); margin-bottom:1rem;">PENALTY EXPOSURE HEATMAP</p>
+      <table class="heatmap-table">
+        <thead><tr><th>KPI</th><th>Severity</th><th>Frequency Score</th></tr></thead>
+        <tbody>
+          <tr><td>RMS Visibility</td><td><span class="badge-high">High</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:90%;background:var(--red)"></div></div>9/10</div></td></tr>
+          <tr><td>NUR</td><td><span class="badge-high">High</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:80%;background:var(--red)"></div></div>8/10</div></td></tr>
+          <tr><td>Configuration Compliance</td><td><span class="badge-high">High</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#F97316"></div></div>7/10</div></td></tr>
+          <tr><td>Solar / Hybrid RE Ratio</td><td><span class="badge-high">High</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#F97316"></div></div>7/10</div></td></tr>
+          <tr><td>Power Restoration MTTR</td><td><span class="badge-high">High</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:70%;background:#F97316"></div></div>7/10</div></td></tr>
+          <tr><td>PM Quality</td><td><span class="badge-med">Medium</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:80%;background:var(--amber)"></div></div>8/10</div></td></tr>
+          <tr><td>Battery Autonomy</td><td><span class="badge-med">Medium</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:70%;background:var(--amber)"></div></div>7/10</div></td></tr>
+          <tr><td>Fuel Efficiency</td><td><span class="badge-med">Medium</span></td><td><div class="score-bar"><div class="bar-bg"><div class="bar-fill" style="width:50%;background:var(--amber)"></div></div>5/10</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- DMAIC -->
+<div id="dmaic" style="background:var(--navy); padding:3rem 0;">
+  <section>
+    <div class="section-label">02 — PROBLEM SOLVING</div>
+    <h2>DMAIC — Now AI-Accelerated</h2>
+    <p class="section-sub">Each phase of DMAIC has a dedicated AI action, platform, and expected output. No more "we need to analyze" without knowing exactly how.</p>
+    <div class="dmaic-grid">
+      <!-- D -->
+      <div class="dmaic-card">
+        <div class="dmaic-letter" style="background:var(--teal)">D</div>
+        <div class="dmaic-name" style="color:var(--teal)">DEFINE</div>
+        <div class="dmaic-platform">📍 ChatGPT-4o</div>
+        <div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"I have a penalty breach of type [MTTR/PMQ/RMS]. The impacted sites are [list]. Define the problem scope, SLA boundary, and stakeholder impact in a structured brief."</div>
+          </div>
+        </div>
+        <div>
+          <div class="dmaic-section-label" style="color:var(--mint)">OUTPUT</div>
+          <div class="dmaic-text" style="margin-top:.3rem;">Problem statement · Scope boundary · Stakeholder map · SLA breach signature</div>
+        </div>
+      </div>
+      <!-- M -->
+      <div class="dmaic-card">
+        <div class="dmaic-letter" style="background:var(--amber)">M</div>
+        <div class="dmaic-name" style="color:var(--amber)">MEASURE</div>
+        <div class="dmaic-platform">📍 Julius AI or Excel Copilot</div>
+        <div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"Here is my RMS log / PM completion data [paste table]. Identify data gaps, calculate mean MTTR, and flag sites with >3 breaches in 90 days."</div>
+          </div>
+        </div>
+        <div>
+          <div class="dmaic-section-label" style="color:var(--mint)">OUTPUT</div>
+          <div class="dmaic-text" style="margin-top:.3rem;">Statistical summary · Data quality flags · MTTR distribution · Top breach sites</div>
+        </div>
+      </div>
+      <!-- A -->
+      <div class="dmaic-card">
+        <div class="dmaic-letter" style="background:var(--mint)">A</div>
+        <div class="dmaic-name" style="color:var(--mint)">ANALYZE</div>
+        <div class="dmaic-platform">📍 ChatGPT-4o or Claude</div>
+        <div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"Using the Ishikawa framework, analyze why [specific penalty] is recurring at [site cluster]. Here is the operational data: [paste]. Generate a fishbone diagram structure and 5-Why chain."</div>
+          </div>
+        </div>
+        <div>
+          <div class="dmaic-section-label" style="color:var(--mint)">OUTPUT</div>
+          <div class="dmaic-text" style="margin-top:.3rem;">Fishbone structure · 5-Why chain · Structural vs behavioral causes · Risk ranking</div>
+        </div>
+      </div>
+      <!-- I -->
+      <div class="dmaic-card">
+        <div class="dmaic-letter" style="background:var(--teallt)">I</div>
+        <div class="dmaic-name" style="color:var(--teallt)">IMPROVE</div>
+        <div class="dmaic-platform">📍 Claude or Gemini Advanced</div>
+        <div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"Based on these root causes [list], generate a structured improvement plan. Include SOP updates, training needs, and 30-day quick wins. Format as an action register."</div>
+          </div>
+        </div>
+        <div>
+          <div class="dmaic-section-label" style="color:var(--mint)">OUTPUT</div>
+          <div class="dmaic-text" style="margin-top:.3rem;">Action register · SOP revision notes · Training priority list · 30-day plan</div>
+        </div>
+      </div>
+      <!-- C -->
+      <div class="dmaic-card">
+        <div class="dmaic-letter" style="background:var(--amber)">C</div>
+        <div class="dmaic-name" style="color:var(--amber)">CONTROL</div>
+        <div class="dmaic-platform">📍 Power BI + Copilot</div>
+        <div>
+          <div class="prompt-block">
+            <div class="prompt-label">PROMPT</div>
+            <div class="prompt-text">"Build a control dashboard using this KPI data [paste]. Include control chart limits, exception alerts for MTTR >4h and RMS offline >1h, and a weekly summary auto-report."</div>
+          </div>
+        </div>
+        <div>
+          <div class="dmaic-section-label" style="color:var(--mint)">OUTPUT</div>
+          <div class="dmaic-text" style="margin-top:.3rem;">Control chart · Alert thresholds · Weekly auto-summary · Recurrence gate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- ZPOS -->
+<div id="zpos">
+  <section>
+    <div class="section-label">03 — ZERO PENALTY OPERATING SYSTEM</div>
+    <h2>ZPOS — 4 Layers, Each AI-Enhanced</h2>
+    <p class="section-sub">AI is built into every layer of the operating model — not as an add-on, but as standard practice.</p>
+    <div class="grid-4">
+      <div class="layer-card">
+        <div class="layer-head">
+          <div class="layer-num" style="background:rgba(8,145,178,0.2); color:var(--teal);">🛡️</div>
+          <div><div class="layer-name" style="color:var(--teal)">L1 — GOVERNANCE</div><div class="layer-title">Structure & Control</div></div>
+        </div>
+        <div style="font-size:0.7rem; font-weight:700; letter-spacing:.08em; color:var(--muted);">AI PLATFORM</div>
+        <div style="font-size:0.82rem; color:var(--teallt);">Microsoft Copilot / ChatGPT</div>
+        <div style="font-size:0.8rem; color:var(--offwhite);">Auto-generate NOC daily briefings, RACI conflict detection, escalation trigger summaries</div>
+        <a href="#governance" style="color:var(--teal); font-size:0.78rem; font-weight:600; text-decoration:none;">See AI actions →</a>
+      </div>
+      <div class="layer-card">
+        <div class="layer-head">
+          <div class="layer-num" style="background:rgba(245,158,11,0.15); color:var(--amber);">⚙️</div>
+          <div><div class="layer-name" style="color:var(--amber)">L2 — PROCESS</div><div class="layer-title">PM &amp; MTTR</div></div>
+        </div>
+        <div style="font-size:0.7rem; font-weight:700; letter-spacing:.08em; color:var(--muted);">AI PLATFORM</div>
+        <div style="font-size:0.82rem; color:var(--teallt);">Claude / Gemini Advanced</div>
+        <div style="font-size:0.8rem; color:var(--offwhite);">PM schedule optimization, CM response SOP generation, change impact analysis</div>
+        <a href="#process" style="color:var(--amber); font-size:0.78rem; font-weight:600; text-decoration:none;">See AI actions →</a>
+      </div>
+      <div class="layer-card">
+        <div class="layer-head">
+          <div class="layer-num" style="background:rgba(16,185,129,0.15); color:var(--mint);">📡</div>
+          <div><div class="layer-name" style="color:var(--mint)">L3 — DIGITAL</div><div class="layer-title">RMS &amp; Predictive</div></div>
+        </div>
+        <div style="font-size:0.7rem; font-weight:700; letter-spacing:.08em; color:var(--muted);">AI PLATFORM</div>
+        <div style="font-size:0.82rem; color:var(--teallt);">Power BI Copilot / Tableau Einstein</div>
+        <div style="font-size:0.8rem; color:var(--offwhite);">Predictive alarm analysis, RMS anomaly detection, fuel theft pattern recognition</div>
+        <a href="#digital" style="color:var(--mint); font-size:0.78rem; font-weight:600; text-decoration:none;">See AI actions →</a>
+      </div>
+      <div class="layer-card">
+        <div class="layer-head">
+          <div class="layer-num" style="background:rgba(6,182,212,0.15); color:var(--teallt);">👥</div>
+          <div><div class="layer-name" style="color:var(--teallt)">L4 — PEOPLE</div><div class="layer-title">Skills &amp; Teams</div></div>
+        </div>
+        <div style="font-size:0.7rem; font-weight:700; letter-spacing:.08em; color:var(--muted);">AI PLATFORM</div>
+        <div style="font-size:0.82rem; color:var(--teallt);">ChatGPT / Claude</div>
+        <div style="font-size:0.8rem; color:var(--offwhite);">Technician skill gap analysis, subcontractor scorecard generation, training plans</div>
+        <a href="#people" style="color:var(--teallt); font-size:0.78rem; font-weight:600; text-decoration:none;">See AI actions →</a>
+      </div>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- GOVERNANCE DEEP DIVE -->
+<div id="governance" style="background:var(--navy); padding:3rem 0;">
+  <section>
+    <div class="section-label">ZPOS LAYER 1 — GOVERNANCE</div>
+    <h2>AI-Powered NOC &amp; Governance</h2>
+    <p class="section-sub">The NOC is your control tower. AI makes it smarter, faster, and predictive.</p>
+    <div class="grid-3">
+      <div class="ai-card">
+        <div class="platform-badge">🤖 ChatGPT-4o / Microsoft Copilot</div>
+        <h3>Daily NOC Briefing Generator</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is today's open ticket list from iTSM [paste table]. Summarize into: (1) Top 3 critical sites, (2) Escalation needs, (3) Resource blockers, (4) Sites at MTTR breach risk. Format as a NOC sync brief under 250 words."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">NOC sync brief</span>
+          <span class="output-chip">Critical site list</span>
+          <span class="output-chip">Escalation flags</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Read at start of daily NOC × O&amp;M call. Share in team WhatsApp/Teams.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--amber)">
+        <div class="platform-badge">🤖 Claude / Gemini Advanced</div>
+        <h3>RACI Conflict Detector</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is our current RACI matrix [paste]. Identify: (1) roles with unclear ownership, (2) tasks with no accountable owner, (3) gaps likely to cause escalation delays. Recommend clarifications."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Ownership gap list</span>
+          <span class="output-chip">Conflict zones</span>
+          <span class="output-chip">RACI updates</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Review monthly. Update RACI in iTSM. Share with Country Heads.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--mint)">
+        <div class="platform-badge">🤖 ChatGPT-4o or Claude</div>
+        <h3>Penalty Exposure Forecaster</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Using this week's KPI performance data [paste], predict which sites are most likely to trigger a penalty in the next 7 days. Rank by risk score and provide the top contributing factor for each."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">7-day risk forecast</span>
+          <span class="output-chip">Site risk ranking</span>
+          <span class="output-chip">Top factors</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Share with O&amp;M Regional Heads every Monday. Pre-position field resources accordingly.</div>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem; background:var(--card); border-radius:10px; padding:1rem 1.5rem; font-size:0.78rem; color:var(--muted); text-align:center;">
+      CADENCE: <strong style="color:var(--offwhite)">Daily</strong> — NOC Brief &nbsp;·&nbsp; <strong style="color:var(--offwhite)">Weekly</strong> — RACI Review &nbsp;·&nbsp; <strong style="color:var(--offwhite)">Monthly</strong> — Penalty Forecast Audit
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- PROCESS -->
+<div id="process">
+  <section>
+    <div class="section-label">ZPOS LAYER 2 — PROCESS</div>
+    <h2>PM Excellence &amp; MTTR — AI-Optimized</h2>
+    <p class="section-sub">Use AI to predict PM failures before they cascade, and to cut MTTR with smarter dispatch decisions.</p>
+    <div style="background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.2); border-radius:12px; padding:1.2rem 1.5rem; margin-bottom:2rem;">
+      <div style="font-size:0.72rem; font-weight:700; letter-spacing:.1em; color:#F87171; margin-bottom:.5rem;">⚠ ONE PM FAILURE → 7 PENALTIES</div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; font-size:0.82rem;">
+        <span style="background:rgba(239,68,68,0.2); color:#F87171; padding:3px 10px; border-radius:4px;">Poor PM on DG</span>
+        <span style="color:var(--muted)">→</span>
+        <span>Inverter overheating</span>
+        <span style="color:var(--muted)">→</span>
+        <span>Battery early discharge</span>
+        <span style="color:var(--muted)">→</span>
+        <span>Site outage</span>
+        <span style="color:var(--muted)">→</span>
+        <span>Slow CM dispatch</span>
+        <span style="color:var(--muted)">→</span>
+        <span>MTTR breach</span>
+        <span style="color:var(--muted)">→</span>
+        <span style="color:#F87171; font-weight:700;">NUR penalty + $$$</span>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="ai-card">
+        <div class="platform-badge">🤖 Claude / Julius AI</div>
+        <h3>PM Risk Predictor</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is my PM completion log for the last 6 months [paste]. For each site, calculate: (1) PM adherence score, (2) risk of penalty cascade, (3) recommended PM priority for next 30 days. Flag any site with &lt;80% adherence as HIGH RISK."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Adherence scores</span>
+          <span class="output-chip">HIGH RISK site list</span>
+          <span class="output-chip">30-day PM priority</span>
+          <span class="output-chip">Cascade risk ratings</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Feed into MTTR pre-positioning. Alert Regional Heads for all HIGH RISK sites. Run monthly minimum.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--amber)">
+        <div class="platform-badge">🤖 ChatGPT-4o / Gemini Advanced</div>
+        <h3>MTTR Optimizer</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is our MTTR data for last quarter [paste] with travel time, access delay, spare readiness, and NOC coordination columns. Identify which factor contributes most to MTTR breaches in each region. Recommend one structural fix per region."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">MTTR breakdown by factor</span>
+          <span class="output-chip">Regional fix priorities</span>
+          <span class="output-chip">NTA matrix suggestion</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Implement top fix per region within 30 days. Track MTTR weekly in NOC dashboard.</div>
+      </div>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- DIGITAL -->
+<div id="digital" style="background:var(--navy); padding:3rem 0;">
+  <section>
+    <div class="section-label">ZPOS LAYER 3 — DIGITAL &amp; AUTOMATION</div>
+    <h2>RMS, Predictive Analytics &amp; Fuel — AI-Driven</h2>
+    <p class="section-sub">Visibility without intelligence is noise. AI turns your RMS data into early warnings you can act on.</p>
+    <div style="background:var(--card); border-radius:10px; padding:1rem 1.5rem; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center;">
+      <span style="font-size:0.82rem;"><span style="color:var(--teal); font-weight:700;">RMS Target:</span> ≥99% visibility</span>
+      <span style="font-size:0.82rem;"><span style="color:var(--teal); font-weight:700;">Heartbeat:</span> every 15 min</span>
+      <span style="font-size:0.82rem;"><span style="color:var(--amber); font-weight:700;">Offline >1hr:</span> 3× MTTR risk</span>
+      <span style="font-size:0.82rem;"><span style="color:var(--red); font-weight:700;">Offline >12hr:</span> 7× battery failure risk</span>
+    </div>
+    <div class="grid-3">
+      <div class="ai-card">
+        <div class="platform-badge">🤖 Hugging Face / Ericsson Predictive O&M</div>
+        <h3>Predictive Alarm Engine</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is 90 days of RMS alarm data by site [paste CSV]. Identify recurring alarm patterns by site. Flag sites where alarm frequency increased &gt;30% in the last 14 days as predictive failure candidates."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Anomaly-flagged sites</span>
+          <span class="output-chip">14-day failure risk</span>
+          <span class="output-chip">Pre-emptive actions</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Pre-dispatch technician to top 5 flagged sites before failure occurs. Share weekly with NOC.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--amber)">
+        <div class="platform-badge">🤖 Julius AI / ChatGPT Code Interpreter</div>
+        <h3>Fuel Theft Detector</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is my fuel consumption log [paste]. Expected DG consumption rate is [X] L/hr. Flag any site with actual consumption &gt;15% above expected as anomaly. Rank by risk level and calculate monthly financial exposure."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Theft anomaly list</span>
+          <span class="output-chip">Financial exposure</span>
+          <span class="output-chip">Risk-ranked sites</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Escalate CRITICAL sites to Country Head same day. Trigger surprise fuel audit within 48 hours.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--mint)">
+        <div class="platform-badge">🤖 Claude / ChatGPT-4o</div>
+        <h3>Battery SoH Analyzer</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is our battery health data across all sites [paste]. Classify all batteries using the SoH index (&lt;65%=replace, 65-80%=high risk, 80-90%=monitor, &gt;90%=healthy). Generate a replacement priority list with estimated NUR penalty exposure."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">SoH classification</span>
+          <span class="output-chip">Replacement priority</span>
+          <span class="output-chip">Penalty exposure estimate</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Submit replacement list to procurement. Cross-reference with NUR penalty history to validate priority.</div>
+      </div>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- PEOPLE -->
+<div id="people">
+  <section>
+    <div class="section-label">ZPOS LAYER 4 — PEOPLE &amp; LEADERSHIP</div>
+    <h2>Skills, Leadership &amp; Subcontractors — AI-Developed</h2>
+    <p class="section-sub">AI builds your team — from skill gap analysis to personalized training plans to subcontractor scorecards.</p>
+    <div class="grid-3">
+      <div class="ai-card">
+        <div class="platform-badge">🤖 ChatGPT-4o / Claude</div>
+        <h3>Skill Gap Analyzer</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is our technician assessment data [paste]. Our competency model has 5 levels (L1–L5). For each technician, identify: (1) current level, (2) gaps vs required level, (3) top 2 skills to develop. Generate a team skill gap heatmap summary."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Skill gap cards</span>
+          <span class="output-chip">Team heatmap</span>
+          <span class="output-chip">L1-L5 placement</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Share with supervisors. Build monthly training calendar from top gaps.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--amber)">
+        <div class="platform-badge">🤖 Excel Copilot / Julius AI</div>
+        <h3>Subcontractor Scorecard Generator</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is the monthly performance data for our 4 subcontractors in Mali [paste: PM adherence, MTTR, RMS uptime, NUR events]. Generate a comparative scorecard. Flag any subcontractor below 70% on 2+ KPIs as high risk. Suggest 3 improvement actions for the weakest."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Comparative scorecard</span>
+          <span class="output-chip">Risk ranking</span>
+          <span class="output-chip">Improvement actions</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Share in monthly Joint Performance Forum. Use as basis for contract conversations.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--mint)">
+        <div class="platform-badge">🤖 Claude / Gemini Advanced</div>
+        <h3>Personalized Training Plan Builder</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Based on this skill gap data [paste], generate a 30-day personalized training plan for each technician. For each gap, recommend: (1) a specific learning topic, (2) an on-the-job exercise, and (3) a way to measure improvement. Keep it field-applicable."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">30-day training plan</span>
+          <span class="output-chip">OJT exercises</span>
+          <span class="output-chip">Measurement criteria</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Assign to supervisors. Review at next monthly performance check.</div>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem; background:var(--card); border-radius:10px; padding:1rem 1.5rem; font-size:0.78rem; color:var(--muted); text-align:center;">
+      LEADERSHIP MODELS IN USE: <strong style="color:var(--offwhite)">Herzberg Two-Factor</strong> (hygiene first, then motivators) &nbsp;·&nbsp; <strong style="color:var(--offwhite)">McGregor X/Y</strong> (empower, don't police) &nbsp;·&nbsp; <strong style="color:var(--offwhite)">Situational Leadership</strong> (match style to competence)
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- ENERGY -->
+<div id="energy" style="background:var(--navy); padding:3rem 0;">
+  <section>
+    <div class="section-label">ENERGY GOVERNANCE</div>
+    <h2>Fuel, Battery &amp; Renewable Energy — AI-Governed</h2>
+    <p class="section-sub">Energy is where the money leaks. AI watches every litre, every charge cycle, every solar ratio.</p>
+    <div class="grid-3">
+      <div class="ai-card">
+        <div class="platform-badge">🤖 ChatGPT Code Interpreter</div>
+        <h3>Fuel Consumption Baseline</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"I have 6 months of fuel log data [paste]. Calculate expected vs actual L/hr for each DG. Flag any &gt;15% variance as anomaly. Build a monthly trend chart. Identify if variance is consistent (calibration issue) or sporadic (theft)."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Variance table</span>
+          <span class="output-chip">Trend chart</span>
+          <span class="output-chip">Theft vs calibration classification</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Trigger site audit for all HIGH variance sites within the same week.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--amber)">
+        <div class="platform-badge">🤖 Claude / Gemini Advanced</div>
+        <h3>RE Ratio Optimizer</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is our solar generation and load data for the last 3 months [paste]. Calculate actual RE ratio per site. For each site below the contracted threshold, suggest: (1) sizing issue, (2) config fix, or (3) maintenance need."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">RE ratio table</span>
+          <span class="output-chip">Under-performing sites</span>
+          <span class="output-chip">Fix recommendations</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Implement config fixes immediately. Sizing issues → feed into next capex cycle.</div>
+      </div>
+      <div class="ai-card" style="border-color:var(--mint)">
+        <div class="platform-badge">🤖 Julius AI / Power BI Copilot</div>
+        <h3>Battery Autonomy Risk Report</h3>
+        <div class="prompt-block">
+          <div class="prompt-label">PROMPT</div>
+          <div class="prompt-text">"Here is battery discharge and recharge data for all sites [paste]. For each site calculate: (1) average autonomy hours, (2) trend vs last quarter, (3) estimated time to SoH &lt;65%. Rank by NUR penalty risk."</div>
+        </div>
+        <div class="output-row">
+          <span class="output-chip">Autonomy report</span>
+          <span class="output-chip">SoH trajectory</span>
+          <span class="output-chip">NUR risk ranking</span>
+        </div>
+        <div class="action-text"><strong>Act on it:</strong> Submit procurement trigger list for batteries below 65% SoH trajectory within 90 days.</div>
+      </div>
+    </div>
+  </section>
+</div>
+<hr class="divider">
+
+<!-- ROADMAP -->
+<div id="roadmap">
+  <section>
+    <div class="section-label">TRANSFORMATION ROADMAP</div>
+    <h2>90-Day AI-Enabled Transformation</h2>
+    <p class="section-sub">Three phases. Clear AI tasks at each phase. No ambiguity. Any country can reach penalty stability in 90 days.</p>
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--teal)">01</div>
+          <div><div class="phase-name" style="color:var(--teal)">DIAGNOSE</div><div class="phase-days">Days 1–20</div></div>
+        </div>
+        <ul class="phase-tasks">
+          <li>Run Penalty Pareto on last 6 months (ChatGPT)</li>
+          <li>Upload PM log → AI identifies top failure patterns</li>
+          <li>Run MTTR breakdown analysis (Julius AI)</li>
+          <li>AI generates skill gap heatmap for all teams</li>
+          <li class="highlight">Output: Penalty heat map, RCA brief, action priority list</li>
+        </ul>
+        <div class="phase-prompt">
+          <div class="phase-prompt-label">KEY PROMPT →</div>
+          "I am starting a 90-day operational transformation. Here is 6 months of penalty data [paste]. Generate: (1) Penalty Pareto, (2) Root cause hypothesis by penalty type, (3) Top 5 structural gaps to fix. Format as an executive brief."
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--amber)">02</div>
+          <div><div class="phase-name" style="color:var(--amber)">STABILIZE</div><div class="phase-days">Days 21–60</div></div>
+        </div>
+        <ul class="phase-tasks">
+          <li>Daily NOC brief generated by AI (ChatGPT)</li>
+          <li>PM risk predictor running — weekly output</li>
+          <li>Fuel anomaly detector active (Code Interpreter)</li>
+          <li>Battery SoH classification done for all sites</li>
+          <li class="highlight" style="color:var(--amber)">Output: KPI above red zone, penalty bleeding stopped</li>
+        </ul>
+        <div class="phase-prompt" style="border-color:var(--amber)">
+          <div class="phase-prompt-label">KEY PROMPT →</div>
+          "Here is this week's operational data [paste: tickets, PM log, RMS uptime, fuel log]. Flag any site in breach or at high risk. Generate NOC daily brief and top 3 intervention priorities."
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--mint)">03</div>
+          <div><div class="phase-name" style="color:var(--mint)">SCALE &amp; CONTROL</div><div class="phase-days">Days 61–90</div></div>
+        </div>
+        <ul class="phase-tasks">
+          <li>Predictive dashboard live (Power BI + Copilot)</li>
+          <li>Subcontractor scorecards AI-generated monthly</li>
+          <li>Training plans AI-built for bottom 20% staff</li>
+          <li>Quarterly maturity audit brief auto-generated</li>
+          <li class="highlight" style="color:var(--mint)">Output: Penalty-free operation, predictive governance model</li>
+        </ul>
+        <div class="phase-prompt" style="border-color:var(--mint)">
+          <div class="phase-prompt-label">KEY PROMPT →</div>
+          "Here is 90 days of operational KPI data [paste]. Generate a maturity assessment: (1) KPI trends, (2) Penalties eliminated, (3) Remaining risk areas, (4) Recommendations for next quarter. Format as a Country Head board brief."
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div style="font-size:2.5rem; margin-bottom:1rem;">🧠</div>
+  <div style="font-size:0.72rem; font-weight:700; letter-spacing:.15em; color:var(--teal); margin-bottom:1rem;">THE AI-ENABLED O&amp;M LEADER</div>
+  <h2>Does not work harder.<br>Operates smarter.</h2>
+  <p style="color:var(--muted); margin:1.2rem auto 2.5rem; max-width:500px;">The ZPF has always been about building systems that scale. AI is the tool that makes every recommendation in this framework real, fast, and repeatable.</p>
+  <div class="pillars-row">
+    <div class="pillar"><strong>Diagnoses with AI</strong><span>Not gut feel</span></div>
+    <div class="pillar"><strong>Predicts with data</strong><span>Not post-mortems</span></div>
+    <div class="pillar"><strong>Reports in minutes</strong><span>Not days</span></div>
+    <div class="pillar"><strong>Develops teams with AI coaching</strong><span>Not guesswork</span></div>
+  </div>
+  <p class="author-line">Zain Ul Aabedeen (Zak) · Group Head of Operations · iEng Group · Africa &amp; Asia<br>
+  <a href="https://www.zainulaabedeen.com">zainulaabedeen.com</a> · ZPF AI-Enabled Edition</p>
+</div>
+
+</body>
+</html>
